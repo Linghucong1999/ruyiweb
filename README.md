@@ -1,24 +1,4 @@
-# ruyiweb
+<h1>无代码平台，从未如此简单</h1>
+🍓 🍓如果需要修改启动方式，只需要将yarn.lock删除掉，还有然后使用你的npm ，亦或者pnpm
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+🌈 🌈后续有新的更新会在README.md中进行更新说明
