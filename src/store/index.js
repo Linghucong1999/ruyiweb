@@ -28,3 +28,11 @@ const actions = {
 const mutations = {};
 const getters = {};
 
+Vue.use(Vuex);
+export default new Vuex.Store({
+    state,
+    actions,
+    mutations,
+    getters
+})
+
