@@ -1,0 +1,45 @@
+/**
+ * 公共方法
+ */
+
+export const Cookie = {
+    /**
+     * getCookie
+     * @param {String} name
+     * @returns {*}
+     */
+
+    get(name) {
+        let strCookie = document.cookie;
+        let arrCookie = strCookie.split("; ");
+        for (let i = 0; i < arrCookie.length; i++) {
+            let arr = arrCookie[i].split("=");
+            if (arr[0] === name) return arr[1];
+        }
+        return "";
+    },
+
+    /**
+     * 添加cookie
+     * @param {String} name
+     * @param value
+     * @param expiresDays   //过期时间
+     * @param domain    //默认为当前文档位置的路径的域名部分
+     * 
+     */
+    set(name, value, expiresDays, domain, path) {
+        let cookieString = name + "=" + (value || "");
+        let date = new Date();
+
+        if (domain !== undefined) {
+            domain = ";domain=" + domain;
+        } else {
+            domain = "";
+        }
+
+        date.setTime(date.getTime() + (expiresDays || 1) * 24 * 60 * 60 * 1000);
+        cookieString = cookieString + domain + "; path=" + (path || "/") + ": expires=" + date.toUTCString();
+        document.cookie = cookieString;
+
+    }
+}
