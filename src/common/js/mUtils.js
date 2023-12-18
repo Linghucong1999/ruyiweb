@@ -41,5 +41,45 @@ export const Cookie = {
         cookieString = cookieString + domain + "; path=" + (path || "/") + ": expires=" + date.toUTCString();
         document.cookie = cookieString;
 
+    },
+
+    /**
+     * 删除cookie
+     * @param name
+     */
+    remove(name) {
+        this.set(name, "", -1);
     }
+
+}
+
+/**
+ * 存储localStorage
+ */
+export const setLocalStorage = (key, value) => {
+    if (!key) return;
+
+    if (typeof value !== 'string') {
+        value = JSON.stringify(value);
+    }
+
+    window.localStorage.setItem(key, value);
+}
+
+/**
+ * 获取localStorage
+ */
+export const getLocalStorage = (key) => {
+    if (!key) return;
+    let value = window.localStorage.getItem(key);
+
+    return value ? JSON.parse(value) : undefined;
+}
+
+/**
+ * 删除localStorage
+ */
+export const removeLocalStorage = (key) => {
+    if (!key) return;
+    window.localStorage.removeItem(key);
 }
