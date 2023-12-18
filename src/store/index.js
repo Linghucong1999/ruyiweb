@@ -3,6 +3,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 //模块
+import user from "./module/user";
 
 
 /**
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     state,
     actions,
     mutations,
-    getters
+    getters,
+    modules:{
+        user,
+    }
 })
 
