@@ -6,7 +6,7 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
-            path: '/login',
+            path: '/',
             name: 'Login',
             component: () => import('@/pages/login'),
             meta: {
@@ -16,7 +16,7 @@ export default new Router({
             }
         },
         {
-            path: '/',
+            path: '/Home',
             name: 'Layout',
             component: () => import('@/pages/layout'),
             redirect: { name: 'Home' },
@@ -28,6 +28,7 @@ export default new Router({
                     redirect: { name: 'page-list' },
                 }
             ]
-        }
+        },
+
     ]
 })

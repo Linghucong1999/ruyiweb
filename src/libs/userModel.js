@@ -75,8 +75,23 @@ let userModel = {
      * 跳转登录
      */
     async goLogin() {
+        //将路由保存在缓存中，用于登录完成后跳转
+        let indexOf = window.location.href.indexOf('#/');
+        let currentUrl = window.location.href.slice(indexOf + 1, window.location.href.length);
+        window.sessionStorage.setItem('beforeLoginUrl', currentUrl);
+        store.commit('updateAccessToken', '');
+        router.push({ name: 'Login' });
+    },
 
+    async goBeforeLoginUrl() {
+        let url = window.sessionStorage.getItem('beforeLoginUrl');
+        if (!url || url.indexOf('/login') !== -1) {
+            router.push('/');
+        } else {
+            router.push(url);
+            window.sessionStorage.setItem('beforeLoginUrl', '');
+        }
     }
-
-
 }
+
+export default userModel;

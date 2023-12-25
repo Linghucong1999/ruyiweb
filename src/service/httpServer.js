@@ -37,7 +37,7 @@ axios.interceptors.response.use(response => {
     }
 }, error => {
     if (error && error.response) {
-        switch (err.response.status) {
+        switch (error.response.status) {
             case 400:
                 error.message = '错误请求';
                 break;
