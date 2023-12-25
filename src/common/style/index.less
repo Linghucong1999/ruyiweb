@@ -182,19 +182,19 @@ img {
   color相关
   =================================================================*/
 .primary {
-  color: $primary;
+  color: @primary;
 }
 
 .color-error {
-  color: $error;
+  color: @error;
 }
 
 .red {
-  color: $error;
+  color: @error;
 }
 
 .gray {
-  color: $gray;
+  color: @gray;
 }
 
 .blue {
@@ -222,13 +222,15 @@ img {
 }
 
 .success {
-  color: $success;
+  color: @success;
 }
-.bg-white{
+
+.bg-white {
   background-color: white;
 }
+
 .bg-gray {
-  background: $gray;
+  background: @gray;
 }
 
 .bg-yellow {
@@ -254,7 +256,7 @@ img {
 
 // 背景渐变
 .bg-color-gradient {
-  background: $color-gradient;
+  background: @color-gradient;
 }
 
 /*=================================================================
@@ -391,50 +393,51 @@ img {
 /*=================================================================
   padding margin
   =================================================================*/
-
-@for $i from 0 through 90 {
-  @if $i % 5==0 {
-    .paddingT#{$i} {
-      padding-top: #{$i}px
-    }
-
-    .paddingL#{$i} {
-      padding-left: #{$i}px
-    }
-
-    .paddingR#{$i} {
-      padding-right: #{$i}px
-    }
-
-    .paddingB#{$i} {
-      padding-bottom: #{$i}px
-    }
-
-    .marginT#{$i} {
-      margin-top: #{$i}px
-    }
-
-    .marginL#{$i} {
-      margin-left: #{$i}px
-    }
-
-    .marginR#{$i} {
-      margin-right: #{$i}px
-    }
-
-    .marginB#{$i} {
-      margin-bottom: #{$i}px
-    }
-
-    .padding#{$i} {
-      padding: #{$i}px
-    }
-
-    .margin#{$i} {
-      margin: #{$i}px
-    }
+.generate-styles (@i) when (@i<=90) {
+  .paddingT@{i} {
+    padding-top: unit(@i, px);
   }
+
+  .paddingL@{i} {
+    padding-left: unit(@i, px);
+  }
+
+  .paddingR@{i} {
+    padding-right: unit(@i, px);
+  }
+
+  .paddingB@{i} {
+    padding-bottom: unit(@i, px);
+  }
+
+  .padding@{i} {
+    padding: unit(@i, px);
+  }
+
+  .marginT@{i} {
+    margin-top: unit(@i, px);
+  }
+
+  .marginL@{i} {
+    margin-left: unit(@i, px);
+  }
+
+  .marginR@{i} {
+    margin-right: unit(@i, px);
+  }
+
+  .marginB@{i} {
+    margin-bottom: unit(@i, px);
+  }
+
+  .margin@{i} {
+    margin: unit(@i, px);
+  }
+
+  .generate-styles(@i+5);
 }
+
+.generate-styles (0);
 
 .margin-auto {
   margin-left: auto;
@@ -488,31 +491,31 @@ img {
   =================================================================*/
 
 .border-T {
-  border-top: 1px solid $border-color;
+  border-top: 1px solid @border-color;
 }
 
 .border-B {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid @border-color;
 }
 
 .border-L {
-  border-left: 1px solid $border-color;
+  border-left: 1px solid @border-color;
 }
 
 .border-R {
-  border-right: 1px solid $border-color;
+  border-right: 1px solid @border-color;
 }
 
 .border-dashed-T {
-  border-top: 1px dashed $border-color;
+  border-top: 1px dashed @border-color;
 }
 
 .border-dashed-B {
-  border-bottom: 1px dashed $border-color;
+  border-bottom: 1px dashed @border-color;
 }
 
 .border-red {
-  border: 1px solid $error !important;
+  border: 1px solid @error !important;
 }
 
 .no-border {
@@ -524,7 +527,7 @@ img {
 }
 
 .border-round {
-  border: 1px solid $border-color;
+  border: 1px solid @border-color;
 }
 
 /*=================================================================
@@ -539,27 +542,27 @@ img {
 
 .required-fields:before {
   content: ' *';
-  color: $error;
+  color: @error;
   font-size: 20px;
 }
 
 /** 页面结构样式 */
 .page-content {
-  padding: $content-both-sides-padding;
+  padding: @content-both-sides-padding;
 }
 
 .page-title-wrapper {
   height: 58px;
   line-height: 58px;
-  padding: 0 $content-both-sides-padding;
+  padding: 0 @content-both-sides-padding;
   font-size: 18px;
   color: black;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid @border-color;
 }
 
 .page-search-wrapper {
   min-height: 48px;
-  padding: 4px $content-both-sides-padding;
+  padding: 4px @content-both-sides-padding;
   line-height: 48px;
 
   &::after {
@@ -598,11 +601,11 @@ img {
 
   .el-table--enable-row-hover .el-table__body tr:hover>td {
     * {
-      color: $primary;
+      color: @primary;
     }
 
     .table-btn {
-      background-color: $primary;
+      background-color: @primary;
     }
   }
 }
@@ -619,8 +622,8 @@ img {
   text-align: center;
 
   &:hover {
-    background: $primary;
-    border-color: $primary;
+    background: @primary;
+    border-color: @primary;
 
     i {
       color: white !important;
@@ -636,8 +639,9 @@ img {
 
 // 背景渐变
 .bg-color-gradient {
-  background: $color-gradient;
+  background: @color-gradient;
 }
+
 .scrollbar-wrapper .el-scrollbar__wrap {
   overflow-x: auto;
 }
@@ -645,9 +649,10 @@ img {
 
 /** 页面结构样式 */
 .page-content {
-  padding: $content-both-sides-padding;
+  padding: @content-both-sides-padding;
 }
-.layout-container{
+
+.layout-container {
   padding-left: 16px;
   padding-right: 16px;
   margin-left: auto;
@@ -656,25 +661,29 @@ img {
 }
 
 
-.scroll-wrapper{
-  ::-webkit-scrollbar-track-piece{
-    background-color:#fff;
-    -webkit-border-radius:3px
+.scroll-wrapper {
+  ::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+    -webkit-border-radius: 3px
   }
-  ::-webkit-scrollbar{
-    width:12px;height:10px
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 10px
   }
-  ::-webkit-scrollbar-thumb{
-    height:30px;
-    background-color:#999;
-    -webkit-border-radius:7px;
-    outline:2px solid #fff;
-    outline-offset:-2px;
-    border:2px solid #fff
+
+  ::-webkit-scrollbar-thumb {
+    height: 30px;
+    background-color: #999;
+    -webkit-border-radius: 7px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff
   }
-  ::-webkit-scrollbar-thumb:hover{
-    height:30px;
-    background-color:#9f9f9f;
-    -webkit-border-radius:8px
+
+  ::-webkit-scrollbar-thumb:hover {
+    height: 30px;
+    background-color: #9f9f9f;
+    -webkit-border-radius: 8px
   }
 }

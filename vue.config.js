@@ -23,8 +23,12 @@ module.exports = defineConfig({
   },
   css: {
     loaderOptions: {
-      sass: {
-        data: fs.readFileSync(path.resolve(__dirname, './src/common/style/index.scss'), 'utf-8')
+      less: {
+        lessOptions: {
+          globalVars: {
+            '@import': path.resolve(__dirname, './src/common/style/variables.less')
+          }
+        }
       }
     }
   }
