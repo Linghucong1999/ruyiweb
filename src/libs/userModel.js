@@ -29,15 +29,6 @@ let userModel = {
         } catch (err) {
             return err;
         }
-        // return new Promise((resolve, reject) => {
-        //     login(data).then(res => {
-        //         store.commit('updateAccessToken', res.body.access_token);
-        //         store.commit('updateUserInfo', res.body.userInfo);
-        //         resolve(res.body);
-        //     }).catch(err => {
-        //         reject(err);
-        //     })
-        // })
     },
     /**
      * 发送验证码
