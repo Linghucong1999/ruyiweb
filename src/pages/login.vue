@@ -10,7 +10,6 @@
               <el-input
                 v-model="formData.username"
                 placeholder="用户名"
-                @keyup.enter.native="doLogin"
                 prefix-icon="el-icon-user"
               ></el-input>
             </el-form-item>
@@ -19,7 +18,6 @@
                 v-model="formData.email"
                 placeholder="邮箱"
                 auto-complete="off"
-                @keyup.enter.native="doLogin"
                 prefix-icon="el-icon-message"
               ></el-input>
             </el-form-item>
@@ -32,16 +30,16 @@
                 show-password
                 prefix-icon="el-icon-lock"
                 clearable
-                @keyup.enter.native="doLogin"
               ></el-input>
             </el-form-item>
-            <el-form-item v-if="type === 'login'">
+            <el-form-item>
               <div class="rest-password">
                 <el-tooltip content="重置密码" placement="top-start">
                   <el-button
                     type="text"
                     @click="goPassword"
                     icon="el-icon-question"
+                    v-if="type === 'login'"
                     >重置密码</el-button
                   >
                 </el-tooltip>
@@ -53,7 +51,7 @@
               </div>
             </el-form-item>
             <el-form-item>
-              <div class="btn-hover" @click="doSubmit">
+              <div class="btn-hover" @click="doSubmit('loginForm')">
                 <el-button type="primary" class="login-button">{{
                   type === "login" ? "登录" : "注册"
                 }}</el-button>
@@ -61,8 +59,8 @@
             </el-form-item>
           </el-form>
 
-          <div class="login-email">
-            <el-button type="text" @click="goEmail">通过邮箱注册</el-button>
+          <div class="login-email" v-if="type === 'login'">
+            <el-button type="text" @click="goEmail">通过邮箱登录</el-button>
           </div>
         </div>
 
@@ -97,7 +95,7 @@
             </el-form-item>
 
             <el-form-item>
-              <div class="btn-hover" @click="doSubmit">
+              <div class="btn-hover" @click="doLoginByEmail">
                 <el-button type="primary" class="login-button">登录</el-button>
               </div>
             </el-form-item>
@@ -113,6 +111,7 @@
 </template>
 
 <script>
+import userModel from "@/libs/userModel";
 export default {
   data() {
     return {
@@ -137,6 +136,16 @@ export default {
             message: "密码不能为空",
             trigger: "blur",
           },
+          {
+            pattern: /^.{6,12}$/,
+            message: "密码长度应为6-12位",
+            trigger: "blur",
+          },
+          // {
+          //   pattern: /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,12}$/,
+          //   message: "必须包含数字和字母",
+          //   trigger: "blur",
+          // },
         ],
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
         code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
@@ -147,17 +156,55 @@ export default {
       countDown: 60, //倒计时
     };
   },
+  created() {
+    this.formUrl = this.$route.query.from
+      ? window.decodeURIComponent(this.$route.query.from)
+      : "";
+  },
   methods: {
-    doSubmit() {},
-    doLogin() {},
-    goPassword() {},
-    switchType() {},
+    doSubmit(form) {
+      this.$refs[form].validate((vaild) => {
+        if (vaild) {
+          let fn = this.type === "login" ? this.doLogin : this.doRegister;
+          fn();
+        } else {
+          this.$message.error("请输入完整信息");
+          return;
+        }
+      });
+    },
+    async doLogin() {
+      let formData = { ...this.formData };
+      let res = await userModel.doLogin(formData);
+      if (Object.keys(res).length !== 0) {
+        this.formUrl
+          ? this.$router.push(this.formUrl)
+          : userModel.goBeforeLoginUrl();
+      }
+    },
+    goPassword() {
+      this.$router.push({ name: "Password" });
+    },
+    switchType() {
+      if (this.type === "login") {
+        this.type = "register";
+      } else {
+        this.type = "login";
+      }
+    },
     goEmail() {
       this.ifEmail = !this.ifEmail;
     },
     sendEmailCode() {
+      if (this.formData.email === "") {
+        this.$message.error("请输入邮箱");
+        return;
+      }
       this.disableEamilButton = true;
       this.countDown = 60; //按钮倒计时
+
+      //发送验证码
+      userModel.sendEmailAndCode({ email: this.formData.email });
       //发送按钮定时器
       const countDownInterval = setInterval(() => {
         this.countDown--;
@@ -167,6 +214,7 @@ export default {
         }
       }, 1000);
     },
+    doLoginByEmail() {},
   },
 };
 </script>
@@ -221,6 +269,9 @@ export default {
     .rest-password {
       display: flex;
       justify-content: space-between;
+
+      .switch-do-type {
+      }
     }
 
     .login-button {

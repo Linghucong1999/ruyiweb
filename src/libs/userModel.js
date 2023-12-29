@@ -4,7 +4,7 @@
 
 import store from "@/store";
 import router from "@/router";
-import { login, register, getUserInfo } from "@/api";
+import { login, register, getUserInfo, loginByEmail, sendEmailCode } from "@/api";
 
 let userModel = {
     /**
@@ -21,8 +21,45 @@ let userModel = {
      * @returns {Promise<void>}
      */
     async doLogin(data) {
+        try {
+            let res = await login(data);
+            // store.commit('updateAccessToken', res.body.access_token);
+            // store.commit('updateUserInfo', res.body.userInfo);
+            return res.body;
+        } catch (err) {
+            return err;
+        }
+        // return new Promise((resolve, reject) => {
+        //     login(data).then(res => {
+        //         store.commit('updateAccessToken', res.body.access_token);
+        //         store.commit('updateUserInfo', res.body.userInfo);
+        //         resolve(res.body);
+        //     }).catch(err => {
+        //         reject(err);
+        //     })
+        // })
+    },
+    /**
+     * 发送验证码
+     * @returns {Promise<void>}
+     */
+    async sendEmailAndCode(data) {
         return new Promise((resolve, reject) => {
-            login(data).then(res => {
+            sendEmailCode(data).then(res => {
+                resolve(res.body);
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    },
+
+    /**
+     * 邮箱登录
+     * @returns {Promise<void>}
+     */
+    async doLoginByEmail(data) {
+        return new Promise((resolve, reject) => {
+            loginByEmail(data).then(res => {
                 store.commit('updateAccessToken', res.body.access_token);
                 store.commit('updateUserInfo', res.body.userInfo);
                 resolve(res.body);
@@ -31,6 +68,7 @@ let userModel = {
             })
         })
     },
+
 
     /**
      * 注册
@@ -80,14 +118,18 @@ let userModel = {
         let currentUrl = window.location.href.slice(indexOf + 1, window.location.href.length);
         window.sessionStorage.setItem('beforeLoginUrl', currentUrl);
         store.commit('updateAccessToken', '');
-        router.push({ name: 'Login' });
+        router.push({ name: 'Layout' });
     },
 
     async goBeforeLoginUrl() {
+        // 获取sessionStorage中的beforeLoginUrl
         let url = window.sessionStorage.getItem('beforeLoginUrl');
-        if (!url || url.indexOf('/login') !== -1) {
+        // 判断beforeLoginUrl是否存在，或者是否包含/login
+        if (!url || url.indexOf('/login') != -1) {
+            // 如果不存在或者包含/login，则跳转到根路由
             router.push('/');
         } else {
+            // 如果存在，则跳转到beforeLoginUrl路由，并将beforeLoginUrl设置为空
             router.push(url);
             window.sessionStorage.setItem('beforeLoginUrl', '');
         }

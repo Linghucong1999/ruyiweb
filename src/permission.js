@@ -14,6 +14,10 @@ router.beforeEach(async (to, from, next) => {
         next();
         return;
     }
+    if (to.name === 'Password') {   //排除Password需要登录校验
+        next();
+        return;
+    }
 
     //用户登录状态拦截
     let loginStatus = await userModel.checkLoginState();

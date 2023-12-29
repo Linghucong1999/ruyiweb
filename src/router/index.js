@@ -16,6 +16,11 @@ export default new Router({
             }
         },
         {
+            path:'/password',
+            name:'Password',
+            component:()=>import('@/pages/password/password'),
+        },
+        {
             path: '/',
             name: 'Layout',
             component: () => import('@/pages/layout'),

@@ -6,6 +6,12 @@ import $axios from "@/service/httpServer";
 //登录
 export const login = data => $axios.post("/ruyi/auth/login", data);
 
+//通过邮箱登录
+export const loginByEmail = data => $axios.post("/ruyi/auth/login/email", data);
+
+//发送验证码
+export const sendEmailCode = data => $axios.post("/ruyi/auth/send/email/code", data);
+
 //注册
 export const register = data => $axios.post("/ruyi/auth/register", data);
 
