@@ -1,6 +1,11 @@
 <template>
   <div class="login">
-    <div class="login-left"></div>
+    <div class="login-left">
+      <div class="code">
+        <div class="qrcode" ref="qrcode"></div>
+        <div class="qrcode-title">扫码方式：微信</div>
+      </div>
+    </div>
     <div class="login-right">
       <div class="login-form">
         <div class="login-header">欢迎来到无代码世界</div>
@@ -65,7 +70,7 @@
         </div>
 
         <div class="login-password" v-else>
-          <el-form :model="formData" :rules="formRules" ref="loginForm">
+          <el-form :model="formData" :rules="formRules" ref="emailForm">
             <el-form-item prop="email">
               <el-input
                 v-model="formData.email"
@@ -112,6 +117,7 @@
 
 <script>
 import userModel from "@/libs/userModel";
+import QRCode from "qrcodejs2";
 export default {
   data() {
     return {
@@ -154,12 +160,16 @@ export default {
       ifEmail: false, //是否通过邮箱注册
       disableEamilButton: false, //发送验证码后禁用
       countDown: 60, //倒计时
+      formUrl: "",
     };
   },
   created() {
     this.formUrl = this.$route.query.from
       ? window.decodeURIComponent(this.$route.query.from)
       : "";
+  },
+  mounted() {
+    this.createQrcode();
   },
   methods: {
     doSubmit(form) {
@@ -182,6 +192,13 @@ export default {
           : userModel.goBeforeLoginUrl();
       }
     },
+    async doRegister() {
+      let formData = { ...this.formData };
+      let res = await userModel.doRegister(formData);
+      this.formUrl
+        ? this.$router.push(this.formUrl)
+        : userModel.goBeforeLoginUrl();
+    },
     goPassword() {
       this.$router.push({ name: "Password" });
     },
@@ -195,16 +212,24 @@ export default {
     goEmail() {
       this.ifEmail = !this.ifEmail;
     },
-    sendEmailCode() {
+    async sendEmailCode() {
       if (this.formData.email === "") {
         this.$message.error("请输入邮箱");
         return;
       }
-      this.disableEamilButton = true;
-      this.countDown = 60; //按钮倒计时
 
       //发送验证码
-      userModel.sendEmailAndCode({ email: this.formData.email });
+      let res = await userModel.sendEmailAndCode({
+        email: this.formData.email,
+      });
+
+      if (res.status === false) {
+        this.$message.error(res.message);
+        return;
+      }
+
+      this.disableEamilButton = true;
+      this.countDown = 60; //按钮倒计时
       //发送按钮定时器
       const countDownInterval = setInterval(() => {
         this.countDown--;
@@ -214,7 +239,35 @@ export default {
         }
       }, 1000);
     },
-    doLoginByEmail() {},
+    doLoginByEmail() {
+      this.$refs["emailForm"].validate(async (vaild) => {
+        if (vaild) {
+          let formData = { ...this.formData };
+          let res = await userModel.doLoginByEmail(formData);
+          if (Object.keys(res).length !== 0) {
+            this.$message.success("登录成功");
+            this.formUrl
+              ? this.$router.push(this.formUrl)
+              : userModel.goBeforeLoginUrl();
+          } else {
+            this.$message.error("该用户未注册");
+          }
+        } else {
+          this.$message.error("请输入正确的邮箱和验证码");
+        }
+      });
+    },
+    //生成二维码
+    createQrcode() {
+      let qrcode = new QRCode(this.$refs.qrcode, {
+        width: 137,
+        height: 137,
+        text: "https://weixin.qq.com/",
+        colorDark: "#0F88EB",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H, //二维码纠错级别
+      });
+    },
   },
 };
 </script>
@@ -225,7 +278,7 @@ export default {
   justify-content: center;
   height: 100vh;
   flex-direction: row;
-  background: url("../common/images/login_background.png") no-repeat center
+  background: url("../common/images/sign_bg.47eec442.png") no-repeat center
     center / cover;
   background-size: 100% 100%;
 }
@@ -235,14 +288,36 @@ export default {
   width: 340px;
   height: 540px;
   box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 15px 0px 0px 15px;
+  background-color: #fbfbfc;
+  border-right: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .code {
+    margin: auto;
+
+    .qrcode {
+      width: 147px;
+      height: 147px;
+      border: 1px solid #e6e6e6;
+      padding: 5px;
+    }
+
+    .qrcode-title {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bolder;
+    }
+  }
 }
 .login-right {
   margin: auto 0;
 
   width: 340px;
   height: 540px;
-  border-radius: 10px;
+  border-radius: 0px 15px 15px 0px;
   box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.2);
   background-color: #fbfbfc;
 
