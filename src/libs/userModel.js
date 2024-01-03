@@ -4,7 +4,7 @@
 
 import store from "@/store";
 import router from "@/router";
-import { login, register, getUserInfo, loginByEmail, sendEmailCode } from "@/api";
+import { login, register, getUserInfo, loginByEmail, sendEmailCode, resetPasswordFirstStep, resetPasswordSecondStep } from "@/api";
 
 let userModel = {
     /**
@@ -46,14 +46,17 @@ let userModel = {
      * @returns {Promise<void>}
      */
     async sendEmailAndCode(data) {
-        return new Promise((resolve, reject) => {
-            sendEmailCode(data).then(res => {
-                resolve(res);
-            }).catch(err => {
-                reject(err);
-            })
-        })
+
+        try {
+            let res = await sendEmailCode(data);
+            return res;
+        } catch (err) {
+            return err;
+        }
+
     },
+
+
 
     /**
      * 邮箱登录
@@ -132,6 +135,32 @@ let userModel = {
             // 如果存在，则跳转到beforeLoginUrl路由，并将beforeLoginUrl设置为空
             router.push(url);
             window.sessionStorage.setItem('beforeLoginUrl', '');
+        }
+    },
+
+    /**
+     * 通过邮箱重置密码
+     */
+    async doResetPasswordByEmail(data) {
+        try {
+            let res = await resetPasswordFirstStep(data);
+            store.commit('updateAccessToken', res.body.access_token);
+            return res;
+        } catch (err) {
+            return err;
+        }
+    },
+
+    /**
+     * 邮箱通过后，重置密码
+     */
+    async doResetPasswordSecondStep(data) {
+        try {
+            let res = await resetPasswordSecondStep(data);
+            store.commit('updateAccessToken', '');
+            return res;
+        } catch (err) {
+            return err;
         }
     }
 }
