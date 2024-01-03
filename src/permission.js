@@ -26,6 +26,13 @@ router.beforeEach(async (to, from, next) => {
         return false;
     }
 
+    //检测用户登录是否过期
+    // let loginExpire = await userModel.checkLoginExpire();
+    // if (loginExpire) {
+    //     userModel.doLogout();
+    //     return false;
+    // }
+
     next();
 })
 

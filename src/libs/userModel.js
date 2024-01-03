@@ -17,14 +17,25 @@ let userModel = {
     },
 
     /**
-     * 登录
+     * 检测用户登录是否过期,时长为半小时(算了，不检测了)
      * @returns {Promise<void>}
+     */
+    async checkLoginExpire() {
+        let userData = store.state.user;
+        let expiration_time = new Date().getTime();
+        return (expiration_time - userData.expiration_time) >= 1800000;
+
+    },
+
+    /**
+     * 登录
+     * 
      */
     async doLogin(data) {
         try {
             let res = await login(data);
-            // store.commit('updateAccessToken', res.body.access_token);
-            // store.commit('updateUserInfo', res.body.userInfo);
+            store.commit('updateAccessToken', res.body.access_token);
+            store.commit('updateUserInfo', res.body.userInfo);
             return res.body;
         } catch (err) {
             return err;
@@ -37,7 +48,7 @@ let userModel = {
     async sendEmailAndCode(data) {
         return new Promise((resolve, reject) => {
             sendEmailCode(data).then(res => {
-                resolve(res.body);
+                resolve(res);
             }).catch(err => {
                 reject(err);
             })
@@ -46,18 +57,17 @@ let userModel = {
 
     /**
      * 邮箱登录
-     * @returns {Promise<void>}
+     * 
      */
     async doLoginByEmail(data) {
-        return new Promise((resolve, reject) => {
-            loginByEmail(data).then(res => {
-                store.commit('updateAccessToken', res.body.access_token);
-                store.commit('updateUserInfo', res.body.userInfo);
-                resolve(res.body);
-            }).catch(err => {
-                reject(err);
-            })
-        })
+        try {
+            let res = await loginByEmail(data);
+            store.commit('updateAccessToken', res.body.access_token);
+            store.commit('updateUserInfo', res.body.userInfo);
+            return res.body;
+        } catch (err) {
+            return err;
+        }
     },
 
 
@@ -65,15 +75,14 @@ let userModel = {
      * 注册
      */
     async doRegister(data) {
-        return new Promise((resolve, reject) => {
-            register(data).then(res => {
-                store.commit('updateAccessToken', res.body.access_token);
-                store.commit('updateUserInfo', res.body.userInfo);
-                resolve(res.body);
-            }).catch(err => {
-                reject(err);
-            })
-        })
+        try {
+            let res = await register(data);
+            store.commit('updateAccessToken', res.body.access_token);
+            store.commit('updateUserInfo', res.body.userInfo);
+            return res.body;
+        } catch (err) {
+            return err;
+        }
     },
 
     /**
@@ -109,7 +118,7 @@ let userModel = {
         let currentUrl = window.location.href.slice(indexOf + 1, window.location.href.length);
         window.sessionStorage.setItem('beforeLoginUrl', currentUrl);
         store.commit('updateAccessToken', '');
-        router.push({ name: 'Layout' });
+        router.push({ name: 'Login' });
     },
 
     async goBeforeLoginUrl() {
