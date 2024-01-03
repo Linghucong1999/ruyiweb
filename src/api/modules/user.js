@@ -24,6 +24,12 @@ export const updateUserNickname = data => $axios.post("/ruyi/user/updata/name", 
 //修改密码
 export const updateUserPassword = data => $axios.post("/ruyi/user/updata/password", data);
 
+//通过邮箱重置密码
+export const resetPasswordFirstStep = data => $axios.post("/ruyi/email/password/reset/first", data);
+
+//邮箱验证通过后重置密码
+export const resetPasswordSecondStep = data => $axios.post("/ruyi/email/password/reset/second", data);
+
 //修改头像
 export const updateUserAvatar = data => $axios.post("/ruyi/user/updata/avater", data);
 
