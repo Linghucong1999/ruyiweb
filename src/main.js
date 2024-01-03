@@ -11,6 +11,7 @@ import * as API from "@/api/index";
 import Element from "element-ui";
 import "@/common/style/element-variables.less";
 import "@/common/style/index.less";
+import "@/common/style/element-ui.less";
 import "animate.css"
 import VueClipboard from 'vue-clipboard2';
 
