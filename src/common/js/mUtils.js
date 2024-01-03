@@ -83,3 +83,34 @@ export const removeLocalStorage = (key) => {
     if (!key) return;
     window.localStorage.removeItem(key);
 }
+
+/**
+ * 存储sessionStorage
+ */
+export const setSessionStorage = (key, value) => {
+    if (!key) return;
+
+    if (typeof value !== 'string') {
+        value = JSON.stringify(value);
+    }
+
+    window.sessionStorage.setItem(key, value);
+}
+
+/**
+ * 获取sessionStorage
+ */
+export const getSessionStorage = (key) => {
+    if (!key) return;
+    let value = window.sessionStorage.getItem(key);
+
+    return value ? JSON.parse(value) : undefined;
+}
+
+/**
+ * 删除sessionStorage
+ */
+export const removeSessionStorage = (key) => {
+    if (!key) return;
+    window.sessionStorage.removeItem(key);
+}
