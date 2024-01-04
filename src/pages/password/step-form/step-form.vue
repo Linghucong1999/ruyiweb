@@ -48,18 +48,39 @@
         </svg>
       </div>
       <div class="footer-form">
-        <el-form :model="formData">
+        <el-form :model="formData" :rules="formRules">
           <el-form-item>
             <el-input
               v-model="formData.newPassword"
               placeholder="请输入新密码"
+              type="password"
+              clearable
+              show-password
             ></el-input>
           </el-form-item>
           <el-form-item>
             <el-input
               v-model="formData.reconPassword"
               placeholder="请再次输入新密码"
+              type="password"
+              clearable
+              show-password
             ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div class="email-notuse">
+              <el-link type="primary">手机号不能用？</el-link>
+              <el-link type="primary">邮箱号不能用？</el-link>
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="handleSubmit"
+              class="handle-submit"
+              :disabled="!formData.newPassword || !formData.reconPassword"
+              >提交</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
@@ -67,6 +88,7 @@
   </div>
 </template>
 <script>
+import userModel from "@/libs/userModel";
 export default {
   name: "StepForm",
   data() {
@@ -75,7 +97,31 @@ export default {
         newPassword: "",
         reconPassword: "",
       },
+      formRules: {
+        newPassword: [
+          { required: true, message: "请输入新密码", trigger: "blur" },
+          {
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/,
+            message: "密码必须包含字母和数字，且长度为6-20",
+          },
+        ],
+        reconPassword: [
+          { required: true, message: "请再次输入新密码", trigger: "blur" },
+          {
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/,
+            message: "密码必须包含字母和数字，且长度为6-20",
+          },
+        ],
+      },
     };
+  },
+  methods: {
+    async handleSubmit() {
+      if (this.formData.newPassword !== this.formData.reconPassword) {
+        this.$message.error("两次输入的密码不一致");
+        return;
+      }
+    },
   },
 };
 </script>
@@ -83,5 +129,16 @@ export default {
 .reset-form {
   width: 350px;
   margin: auto;
+
+  .footer-form {
+    .email-notuse {
+      display: flex;
+      justify-content: space-between;
+      width: 350px;
+    }
+    .handle-submit {
+      width: 100%;
+    }
+  }
 }
 </style>
