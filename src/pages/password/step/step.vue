@@ -85,18 +85,18 @@ export default {
 
     //填写完验证码的下一步
     async codeNext() {
-      // if (this.code === "") {
-      //   this.$message.error("请输入验证码");
-      //   return;
-      // }
-      // let res = await userModel.doResetPasswordByEmail({
-      //   email: this.email,
-      //   code: this.code,
-      // });
-      // if (res.status) {
+      if (this.code === "") {
+        this.$message.error("请输入验证码");
+        return;
+      }
+      let res = await userModel.doResetPasswordByEmail({
+        email: this.email,
+        code: this.code,
+      });
+      if (res.status) {
         let number=this.active+1;
         this.$emit("next", number);
-      // }
+      }
     },
   },
 };

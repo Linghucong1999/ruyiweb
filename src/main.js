@@ -6,6 +6,7 @@ import httpServer from './service/httpServer' //axios拦截器
 import "@/permission"; //权控
 import * as mUtils from "@/common/js/mUtils";
 import config from "@/config";
+import filter from './filters/index';
 
 import * as API from "@/api/index";
 import Element from "element-ui";
@@ -26,9 +27,18 @@ Vue.prototype.$mUtils = mUtils;
 Vue.prototype.$axios = httpServer;
 Vue.prototype.$api = API;
 
-/**
- * 公共配置
- */
+//全局注册过滤器
+Object.keys(filter).forEach(key => {
+  Vue.filter(key, filter[key]);
+})
+
+//登录成功后跳转方法
+Vue.prototype.goBeforeLogin = function () {
+  
+}
+
+//公共配置
+
 Vue.prototype.$config = config;
 
 

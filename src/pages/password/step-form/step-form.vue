@@ -121,6 +121,16 @@ export default {
         this.$message.error("两次输入的密码不一致");
         return;
       }
+
+      let data = {
+        newPassword: this.formData.newPassword,
+        reconPassword: this.formData.reconPassword,
+      };
+
+      let res = await userModel.doResetPasswordSecondStep(data);
+      if (res.status === true) {
+        this.$router.push({ path:'/login' });
+      }
     },
   },
 };

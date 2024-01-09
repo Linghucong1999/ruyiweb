@@ -34,15 +34,15 @@ export default {
       this.active === 0 ? this.stepNext(value) : this.passCodeNext(value);
     },
     async stepNext(value) {
-      // if (!value) {
-      //   this.$message.error("请输入邮箱");
-      //   return;
-      // }
-      // let data = { email: value };
-      // let res = await userModel.sendEmailAndCode(data);
-      // if (res.status) {
-      this.active++;
-      // }
+      if (!value) {
+        this.$message.error("请输入邮箱");
+        return;
+      }
+      let data = { email: value };
+      let res = await userModel.sendEmailAndCode(data);
+      if (res.status === true) {
+        this.active++;
+      }
     },
     //邮箱和验证码都通过后的下一步
     passCodeNext(value) {
