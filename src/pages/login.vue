@@ -345,8 +345,7 @@ export default {
       display: flex;
       justify-content: space-between;
 
-      .switch-do-type {
-      }
+      
     }
 
     .login-button {
