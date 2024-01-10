@@ -32,9 +32,16 @@ Object.keys(filter).forEach(key => {
   Vue.filter(key, filter[key]);
 })
 
-//登录成功后跳转方法
+//登录成功后跳转方法,在用户登录后能够回到登录前访问的页面
 Vue.prototype.goBeforeLogin = function () {
-  
+  let url = mUtils.Cookie.get("beforeLoginUrl");
+  url = decodeURIComponent(url);
+  if (!url || url.indexOf('/author') !== -1) {
+    router.push('/');
+  } else {
+    router.push(url);
+    mUtils.Cookie.set('beforeLoginUrl', '', 1 / 24 / 60, window.location.host, window.location.pathname.substring(0, window.location.pathname.length - 1));
+  }
 }
 
 //公共配置
@@ -49,6 +56,7 @@ Vue.prototype.$config = config;
 Vue.config.productionTip = false
 
 store.commit("getUserFromLocal");
+
 new Vue({
   router,
   store,

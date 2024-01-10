@@ -1,5 +1,5 @@
 <template>
-    <div>进来</div>
+    <div>难受</div>
 </template>
 
 <script>

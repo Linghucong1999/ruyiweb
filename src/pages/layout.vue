@@ -1,17 +1,19 @@
 <template>
-  <div>进来</div>
+  <div class="page-layout">
+    <div class="page-header-wrapper">
+      <PageHeader />
+    </div>
+    <router-view class="sub-page"></router-view>
+  </div>
 </template>
 
 <script>
+import PageHeader from '@/components/page-header.vue';
 export default {
-  created() {
-    let res = this.$api.getUserInfo();
-    res.then(item=>{
-      console.log(item);
-    })
-  },
+  components: {
+    PageHeader,
+  }
 };
 </script>
 
-<style>
-</style>
+<style lang="less" scoped></style>
