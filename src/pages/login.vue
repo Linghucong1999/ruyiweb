@@ -48,7 +48,8 @@
                     >重置密码</el-button
                   >
                 </el-tooltip>
-                <div class="switch-do-type">
+                <div class="switch-do-
+                type">
                   <el-button type="text" @click="switchType">{{
                     type === "login" ? "立即注册" : "马上登录"
                   }}</el-button>
