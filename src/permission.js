@@ -26,6 +26,18 @@ router.beforeEach(async (to, from, next) => {
         return false;
     }
 
+    //登录成功后获取用户信息
+    try {
+        await userModel.getUserInfoData();
+        // next();
+    } catch (err) {
+        if (!err.data.status) {
+            userModel.doLogout();
+            return;
+        }
+    }
+
+
     //检测用户登录是否过期
     // let loginExpire = await userModel.checkLoginExpire();
     // if (loginExpire) {
