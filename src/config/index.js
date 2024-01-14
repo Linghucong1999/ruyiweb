@@ -4,7 +4,7 @@
 
 const configDict = {
     development: {
-        baseURL: 'http://127.0.0.1:8019'
+        baseURL: 'http://127.0.0.1:8018'
     },
     production: {
         baseURL: ''
@@ -40,7 +40,7 @@ const configObj = {
             label: 'PC页面',
             disabled: true,
         }
-    ]
+    ],
 };
 
 export default configObj;
