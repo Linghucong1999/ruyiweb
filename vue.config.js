@@ -1,6 +1,6 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
-const fs = require('fs');
+// const fs = require('fs');
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
@@ -32,4 +32,4 @@ module.exports = defineConfig({
       }
     }
   }
-})
+});
