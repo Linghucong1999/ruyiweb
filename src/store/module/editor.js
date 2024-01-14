@@ -1,5 +1,4 @@
-import { cloneDeep, merge } from "lodash";
-
+// import { cloneDeep, merge } from "lodash";
 
 /**
  * 编辑数据状态存储
@@ -17,8 +16,8 @@ const state = {
     //undo redo指针
     currentHistoryIndex: -1,
     activeAttrEditCollapse: ['1'],
-}
+};
 
 export default {
     state
-}
+};

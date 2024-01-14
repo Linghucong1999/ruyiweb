@@ -25,7 +25,7 @@ export const Cookie = {
      * @param value
      * @param expiresDays   //过期时间
      * @param domain    //默认为当前文档位置的路径的域名部分
-     * 
+     *
      */
     set(name, value, expiresDays, domain, path) {
         let cookieString = name + "=" + (value || "");
@@ -51,7 +51,7 @@ export const Cookie = {
         this.set(name, "", -1);
     }
 
-}
+};
 
 /**
  * 存储localStorage
@@ -64,7 +64,7 @@ export const setLocalStorage = (key, value) => {
     }
 
     window.localStorage.setItem(key, value);
-}
+};
 
 /**
  * 获取localStorage
@@ -74,7 +74,7 @@ export const getLocalStorage = (key) => {
     let value = window.localStorage.getItem(key);
 
     return value ? JSON.parse(value) : undefined;
-}
+};
 
 /**
  * 删除localStorage
@@ -82,7 +82,7 @@ export const getLocalStorage = (key) => {
 export const removeLocalStorage = (key) => {
     if (!key) return;
     window.localStorage.removeItem(key);
-}
+};
 
 /**
  * 存储sessionStorage
@@ -95,7 +95,7 @@ export const setSessionStorage = (key, value) => {
     }
 
     window.sessionStorage.setItem(key, value);
-}
+};
 
 /**
  * 获取sessionStorage
@@ -105,7 +105,7 @@ export const getSessionStorage = (key) => {
     let value = window.sessionStorage.getItem(key);
 
     return value ? JSON.parse(value) : undefined;
-}
+};
 
 /**
  * 删除sessionStorage
@@ -113,4 +113,4 @@ export const getSessionStorage = (key) => {
 export const removeSessionStorage = (key) => {
     if (!key) return;
     window.sessionStorage.removeItem(key);
-}
+};

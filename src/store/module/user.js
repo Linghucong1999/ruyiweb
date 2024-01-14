@@ -8,7 +8,7 @@ const state = {
     permissionsList: [],
     userInfo: {}, // 用户信息
     // expiration_time: 0, // 过期时间
-}
+};
 
 const actions = {};
 
@@ -75,7 +75,7 @@ const mutations = {
         state.expiration_time = 0;
         mutations.saveUserToLocal(state);
     }
-}
+};
 
 const getters = {
     authorization(state) {
@@ -84,11 +84,11 @@ const getters = {
     userInfo(state) {
         return state.userInfo;
     }
-}
+};
 
 export default {
     state,
     actions,
     mutations,
     getters
-}
+};

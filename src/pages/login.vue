@@ -48,8 +48,7 @@
                     >重置密码</el-button
                   >
                 </el-tooltip>
-                <div class="switch-do-
-                type">
+                <div class="switch-do- type">
                   <el-button type="text" @click="switchType">{{
                     type === "login" ? "立即注册" : "马上登录"
                   }}</el-button>
@@ -195,7 +194,7 @@ export default {
     },
     async doRegister() {
       let formData = { ...this.formData };
-      let res = await userModel.doRegister(formData);
+      await userModel.doRegister(formData);
       this.formUrl
         ? this.$router.push(this.formUrl)
         : userModel.goBeforeLoginUrl();
@@ -260,7 +259,7 @@ export default {
     },
     //生成二维码
     createQrcode() {
-      let qrcode = new QRCode(this.$refs.qrcode, {
+      new QRCode(this.$refs.qrcode, {
         width: 137,
         height: 137,
         text: "https://weixin.qq.com/",
@@ -283,6 +282,7 @@ export default {
     center / cover;
   background-size: 100% 100%;
 }
+
 .login-left {
   margin: auto 0;
 
@@ -313,6 +313,7 @@ export default {
     }
   }
 }
+
 .login-right {
   margin: auto 0;
 
@@ -345,8 +346,6 @@ export default {
     .rest-password {
       display: flex;
       justify-content: space-between;
-
-      
     }
 
     .login-button {

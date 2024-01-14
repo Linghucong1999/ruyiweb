@@ -4,7 +4,6 @@ import $config from '@/config/index';
 import { Cookie } from '@/common/js/mUtils';
 import qs from 'qs';
 
-
 //线上环境需要配置axios.defaults.baseURL,生产环境使用proxy代理即可
 if (process.env.NODE_ENV !== 'development') {
     axios.defaults.baseURL = $config.baseURL;
@@ -22,7 +21,7 @@ axios.interceptors.request.use(config => {
     return config;
 }, error => {
     return Promise.reject(error);
-})
+});
 
 //响应拦截器异常处理
 axios.interceptors.response.use(response => {
@@ -32,7 +31,7 @@ axios.interceptors.response.use(response => {
         store.dispatch('showMessage', {
             type: 'error',
             data: response.data.message,
-        })
+        });
         return Promise.reject(response);
     }
 }, error => {
@@ -80,16 +79,16 @@ axios.interceptors.response.use(response => {
     store.dispatch('showMessage', {
         type: 'error',
         data: error.message || error.response.message,
-    })
+    });
     return Promise.reject(error.response);
-})
+});
 
 /**
  * 下载文件
  */
 let downloadFile = url => {
     window.open(url);
-}
+};
 
 export default {
     //get请求
@@ -102,7 +101,7 @@ export default {
                 ...(header || {})
             },
             responseType: responseType,
-        })
+        });
     },
 
     //post请求
@@ -115,7 +114,7 @@ export default {
                 ...(header || {}),
                 'Content-type': 'application/json;charset=UTF-8'
             }
-        })
+        });
     },
     postFormData(url, param, header) {
         return axios({
@@ -126,7 +125,7 @@ export default {
                 ...(header || {}),
                 'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
             }
-        })
+        });
     },
     put(url, param, header) {
         return axios({
@@ -137,7 +136,7 @@ export default {
                 ...(header || {}),
                 'Content-type': 'application/json;charset=UTF-8'
             }
-        })
+        });
     },
     delete(url, param, header) {
         return axios({
@@ -147,13 +146,13 @@ export default {
             headers: {
                 ...(header || {}),
             }
-        })
+        });
     },
     //导出文件
     getFile(url, param) {
         let tempParam = {
             ...(param || {})
-        }
+        };
 
         //拼接地址
         let list = [];
@@ -164,4 +163,4 @@ export default {
         url = encodeURI(url);
         downloadFile(url);
     }
-}
+};

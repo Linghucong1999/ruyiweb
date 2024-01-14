@@ -1,10 +1,10 @@
 /**
  * 路由权限相关管理
  */
-import router from "@/router";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-import userModel from "@/libs/userModel";
+import router from '@/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import userModel from '@/libs/userModel';
 
 router.beforeEach(async (to, from, next) => {
     NProgress.start();
@@ -37,7 +37,6 @@ router.beforeEach(async (to, from, next) => {
         }
     }
 
-
     //检测用户登录是否过期
     // let loginExpire = await userModel.checkLoginExpire();
     // if (loginExpire) {
@@ -46,8 +45,8 @@ router.beforeEach(async (to, from, next) => {
     // }
 
     next();
-})
+});
 
 router.afterEach(() => {
     NProgress.done();
-})
+});

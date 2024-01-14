@@ -29,7 +29,7 @@ let userModel = {
 
     /**
      * 登录
-     * 
+     *
      */
     async doLogin(data) {
         try {
@@ -56,11 +56,9 @@ let userModel = {
 
     },
 
-
-
     /**
      * 邮箱登录
-     * 
+     *
      */
     async doLoginByEmail(data) {
         try {
@@ -72,7 +70,6 @@ let userModel = {
             return err;
         }
     },
-
 
     /**
      * 注册
@@ -98,8 +95,8 @@ let userModel = {
                 resolve(res.body);
             }).catch(err => {
                 reject(err);
-            })
-        })
+            });
+        });
     },
 
     /**
@@ -163,6 +160,6 @@ let userModel = {
             return err;
         }
     }
-}
+};
 
 export default userModel;

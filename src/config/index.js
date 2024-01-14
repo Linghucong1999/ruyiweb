@@ -9,7 +9,7 @@ const configDict = {
     production: {
         baseURL: ''
     }
-}
+};
 
 const currentConfigKey = process.env.NODE_ENV;
 const isDev = process.env.NODE_ENV === 'development';
@@ -41,7 +41,6 @@ const configObj = {
             disabled: true,
         }
     ]
-}
-
+};
 
 export default configObj;
