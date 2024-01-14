@@ -20,20 +20,71 @@
 
             <div class="user-image-upload" v-if="showEdit">
               <el-tooltip
-                content="点击头像更换 (只支持jpg、png、jpeg格式且大小不超过1M的图片)"
+                content="点击头像更换 (只支持jpg、png、jpeg格式且大小不超过3M的图片)"
                 placement="top"
                 effect="dark"
               >
                 <el-upload
                   class="user-image-upload-input"
-                  action="/"
-                  :before-upload="beforeUploadUserHeadImage"
+                  :action="avaterurl"
+                  :before-upload="beforeUploadAvatar"
+                  :show-file-list="false"
+                  :limit="1"
+                  :on-remove="handleRemove"
+                  :on-exceed="handleExceed"
+                  :headers="avatarToken"
+                  :on-success="handleAvatarSuccess"
+                  :on-preview="handlePictureCardPreview"
                 >
+                  <i class="el-icon-upload"></i>
                 </el-upload>
               </el-tooltip>
             </div>
           </div>
         </div>
+
+        <el-form label-width="120" ref="table" inline>
+          <el-form-item label="昵称：">
+            <div v-if="!editName">
+              <span class="inline-block">{{ userData.name }}</span>
+              <el-button
+                v-if="showEdit"
+                size="mini"
+                icon="el-icon-edit"
+                @click="setEditName(true)"
+                type="text"
+                circle
+              ></el-button>
+            </div>
+            <div class="edit-name-wrapper" v-else>
+              <div class="edit-name-input">
+                <el-input v-model="name"></el-input>
+              </div>
+              <el-button
+                size="mini"
+                icon="el-icon-close"
+                @click="setEditName(false)"
+                circle
+              ></el-button>
+              <el-button
+                type="primary"
+                size="mini"
+                icon="el-icon-check"
+                @click="saveNickName"
+                circle
+              ></el-button>
+            </div>
+          </el-form-item>
+          <el-form-item label="用户名：">
+            <el-input :value="userData.username"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱">
+            <el-input :value="userData.email"></el-input>
+          </el-form-item>
+          <el-form-item label="注册时间">
+            <el-input :value="userData.created | dateFormat"></el-input>
+          </el-form-item>
+        </el-form>
       </div>
     </el-dialog>
   </div>
@@ -56,16 +107,122 @@ export default {
     return {
       dialogVisible: false,
       userHeadImage: require("@/common/images/headerImage.png"),
+      uploadFilesImage: [],
+      dialogImageUrl: "",
+      editName: false,
+      name: "",
     };
+  },
+  computed: {
+    avaterurl() {
+      return this.$config.baseURL + this.$api.updataUserAvatarURL;
+    },
+    avatarToken() {
+      return {
+        Authorization: this.$store.getters.authorization,
+      };
+    },
   },
   methods: {
     show() {
       this.dialogVisible = true;
     },
-    closeDialog() {},
-    beforeUploadUserHeadImage() {},
+    closeDialog() {
+      this.dialogVisible = false;
+      this.$emit("close");
+    },
+    beforeUploadAvatar(filelist) {
+      const isJPG =
+        filelist.type === "image/jpeg" || filelist.type === "image/png";
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
+        return false;
+      }
+
+      const isLt3M = filelist.size / 1024 / 1024 < 3;
+      if (!isLt3M) {
+        this.$message.error("上传头像图片大小不能超过 3MB!");
+        return false;
+      }
+      return true;
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    async handleAvatarSuccess() {
+      this.$message.success("上传成功");
+      this.$emit("success");
+    },
+    // 移除图片
+    handleRemove(filelist) {
+      console.log(filelist);
+    },
+    handleExceed(files) {
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${files.length} 个文件`
+      );
+    },
+    setEditName(type) {
+      this.editName = !!type;
+    },
+    saveNickName() {
+      this.$api.updateUserNickname({ name: this.name }).then((res) => {
+        this.$store.commit("updateUserInfo", res.body);
+        this.setEditName(false);
+      });
+    },
   },
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page-dialog-warapper {
+  .user-image-wrapper {
+    text-align: center;
+    padding-bottom: 20px;
+    .user-image-inner {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+
+      img {
+        // display: inline-block;
+        // width: 100%;
+        // height: 100%;
+      }
+
+      .user-image-upload {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        .user-image-upload-input {
+          width: 100%;
+          height: 100%;
+          text-align: center;
+
+          .el-icon-upload {
+            line-height: 100px;
+            font-size: 30px;
+            color: #eee;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+          }
+        }
+        &:hover {
+          .el-icon-upload {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

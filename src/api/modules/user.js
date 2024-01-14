@@ -32,6 +32,7 @@ export const resetPasswordSecondStep = data => $axios.post("/ruyi/email/password
 
 //修改头像
 export const updateUserAvatar = data => $axios.post("/ruyi/user/updata/avater", data);
+export const updataUserAvatarURL = "/ruyi/user/updata/avater";
 
 //关键词搜索用户
 export const getUserListByKeywords = data => $axios.get('/ruyi/user/getUserList', data);

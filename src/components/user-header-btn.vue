@@ -9,7 +9,11 @@
       </div>
       <el-dropdown-menu v-if="isLogined">
         <el-dropdown-item>
-          <user-info :user-data="userData" :show-edit="true">
+          <user-info
+            :user-data.sync="userData"
+            :show-edit="true"
+            @success="handleSuccesAvatar"
+          >
             <i class="el-icon-user"></i>个人中心
           </user-info>
         </el-dropdown-item>
@@ -18,8 +22,9 @@
   </div>
 </template>
 <script>
-// import userModel from "@/libs/userModel";
 import userInfo from "./user-info.vue";
+import { cloneDeep } from "lodash";
+import userModel from "@/libs/userModel";
 
 export default {
   components: {
@@ -35,7 +40,14 @@ export default {
       return this.$store.state.user.access_token;
     },
     userData() {
-      return this.$store.state.user.userInfo || {};
+      let userInfo = cloneDeep(this.$store.state.user.userInfo) || {};
+      // Object.assign(userInfo.avatar, this.$config.baseURL + userInfo.avatar);
+      return userInfo;
+    },
+  },
+  methods: {
+    async handleSuccesAvatar() {
+      await userModel.getUserInfoData();
     },
   },
 };
