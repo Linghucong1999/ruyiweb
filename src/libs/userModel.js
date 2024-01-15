@@ -38,7 +38,7 @@ let userModel = {
             store.commit('updateUserInfo', res.body.userInfo);
             return res.body;
         } catch (err) {
-            return err;
+            return err.data.body;
         }
     },
     /**

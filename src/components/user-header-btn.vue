@@ -5,7 +5,7 @@
         <div class="user-header-btn-img">
           <img :src="userData.avatar || userHeadImage" alt="" />
         </div>
-        <span class="user-head-btn-name">{{ userData.name }}</span>
+        <div class="user-head-btn-name">{{ userData.name }}</div>
       </div>
       <el-dropdown-menu v-if="isLogined">
         <el-dropdown-item>
@@ -17,18 +17,25 @@
             <i class="el-icon-user"></i>个人中心
           </user-info>
         </el-dropdown-item>
+        <el-dropdown-item>
+          <reset-password>
+            <i class="el-icon-lock"></i>修改密码
+          </reset-password>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
 <script>
 import userInfo from "./user-info.vue";
+import ResetPassword from "./reset-password.vue";
 import { cloneDeep } from "lodash";
 import userModel from "@/libs/userModel";
 
 export default {
   components: {
     userInfo,
+    ResetPassword,
   },
   data() {
     return {
@@ -52,4 +59,33 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.user-head-btn-components {
+  cursor: pointer;
+
+  .inline-block {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    line-height: 40px;
+
+    .user-header-btn-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #f5f5f5;
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+
+    .user-head-btn-name {
+      font-size: 14px;
+      margin-left: 10px;
+    }
+  }
+}
+</style>

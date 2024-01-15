@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <el-form label-width="120" ref="table" inline>
+        <el-form label-width="100px" ref="table">
           <el-form-item label="昵称：">
             <div v-if="!editName">
               <span class="inline-block">{{ userData.name }}</span>
@@ -58,7 +58,10 @@
             </div>
             <div class="edit-name-wrapper" v-else>
               <div class="edit-name-input">
-                <el-input v-model="name"></el-input>
+                <el-input
+                  v-model="name"
+                  :placeholder="userData.name"
+                ></el-input>
               </div>
               <el-button
                 size="mini"
@@ -78,10 +81,10 @@
           <el-form-item label="用户名：">
             <el-input :value="userData.username"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱">
+          <el-form-item label="邮箱：">
             <el-input :value="userData.email"></el-input>
           </el-form-item>
-          <el-form-item label="注册时间">
+          <el-form-item label="注册时间：">
             <el-input :value="userData.created | dateFormat"></el-input>
           </el-form-item>
         </el-form>
@@ -189,12 +192,6 @@ export default {
       overflow: hidden;
       position: relative;
 
-      img {
-        // display: inline-block;
-        // width: 100%;
-        // height: 100%;
-      }
-
       .user-image-upload {
         width: 100%;
         height: 100%;
@@ -223,6 +220,27 @@ export default {
         }
       }
     }
+  }
+
+  .edit-name-input {
+    display: inline-block;
+    width: 250px;
+    margin-right: 16px;
+  }
+
+  ::v-deep .el-input {
+    width: 250px;
+  }
+
+  ::v-deep .el-input__inner {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #dcdfe6;
+  }
+
+  ::v-deep .el-input__inner:focus {
+    border-color: #409eff;
+    outline: 0;
   }
 }
 </style>
