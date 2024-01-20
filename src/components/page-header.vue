@@ -76,7 +76,5 @@ export default {
     }
   }
 
-  .user-wrapper {
-  }
 }
 </style>
