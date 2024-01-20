@@ -22,8 +22,14 @@
             <i class="el-icon-lock"></i>修改密码
           </reset-password>
         </el-dropdown-item>
+        <el-dropdown-item>
+          <div @click="doLogout">
+            <i class="el-icon-switch-button"></i>退出登录
+          </div>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+    <div v-else class="inline-block" @click="goLogin">登录/注册</div>
   </div>
 </template>
 <script>
@@ -55,6 +61,12 @@ export default {
   methods: {
     async handleSuccesAvatar() {
       await userModel.getUserInfoData();
+    },
+    doLogout() {
+      userModel.doLogout();
+    },
+    goLogin() {
+      userModel.goLogin();
     },
   },
 };
