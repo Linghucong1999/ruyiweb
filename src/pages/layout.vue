@@ -8,12 +8,13 @@
 </template>
 
 <script>
-import PageHeader from '@/components/page-header.vue';
+import PageHeader from "@/components/page-header.vue";
 export default {
   components: {
     PageHeader,
-  }
+  },
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>
