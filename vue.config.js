@@ -24,11 +24,7 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       less: {
-        lessOptions: {
-          globalVars: {
-            '@import': path.resolve(__dirname, './src/common/style/variables.less')
-          }
-        }
+        additionalData: `@import "${path.resolve(__dirname, './src/common/style/variables.less')}";`
       }
     }
   }

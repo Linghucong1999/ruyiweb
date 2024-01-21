@@ -1,7 +1,7 @@
 <template>
   <div class="page-home">
     <div class="home-side-bar">
-      <el-menu default-active="/page-list" router>
+      <el-menu default-active="/home/page-list" router>
         <el-menu-item index="/home/page-list">
           <i class="el-icon-s-home"></i>
           <span slot="title">我的作品</span>
