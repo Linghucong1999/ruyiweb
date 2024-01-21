@@ -17,4 +17,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.page-layout {
+  height: 100%;
+}
+.sub-page {
+  position: relative;
+  height: 100%;
+}
 </style>

@@ -19,9 +19,9 @@
           <span slot="title">创意模板</span>
         </el-menu-item>
       </el-menu>
-      <div class="my-page-list clearfix">
-        <router-view class="sub-page"></router-view>
-      </div>
+    </div>
+    <div class="my-page-list clearfix">
+      <router-view class="sub-page"></router-view>
     </div>
   </div>
 </template>
@@ -29,8 +29,24 @@
 <script>
 export default {};
 </script>
-<style scoped>
+<style lang="less" scoped>
 .page-home {
   display: flex;
+  height: 100%;
+//   background-color: #f0f2f5;
+  margin-top: 8px;
+
+  .home-side-bar {
+    width: 200px;
+    border-right: 1px solid #f3f2f2;
+  }
+
+  .my-page-list {
+    flex: 1;
+    height: 100%;
+    .sub-page {
+      height: 100%;
+    }
+  }
 }
 </style>

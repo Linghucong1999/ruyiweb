@@ -16,9 +16,9 @@ export default new Router({
             }
         },
         {
-            path:'/password',
-            name:'Password',
-            component:()=>import('@/pages/password/password'),
+            path: '/password',
+            name: 'Password',
+            component: () => import('@/pages/password/password'),
         },
         {
             path: '/',
@@ -30,7 +30,34 @@ export default new Router({
                     path: 'home',
                     name: 'Home',
                     component: () => import('@/pages/home/index'),
-                    // redirect: { name: 'pageList' },
+                    redirect: { name: 'pageList' },
+                    children: [
+                        {
+                            path: 'page-list',
+                            name: 'pageList',
+                            component: () => import('@/pages/home/page-list.vue'),
+                        },
+                        {
+                            path: 'my-template',
+                            name: 'myTemplate',
+                            component: () => import('@/pages/home/my-template.vue'),
+                        },
+                        {
+                            path: 'page-data',
+                            name: 'pageData',
+                            component: () => import('@/pages/home/page-data.vue'),
+                        },
+                        {
+                            path: 'page-data-detail',
+                            name: 'pageDataDetail',
+                            component: () => import('@/pages/home/page-data-detail.vue'),
+                        },
+                        {
+                            path: 'template-list',
+                            name: 'templateList',
+                            component: () => import('@/pages/home/template-list.vue'),
+                        }
+                    ]
                 }
             ]
         },
