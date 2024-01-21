@@ -3,7 +3,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store/index';
 import httpServer from './service/httpServer'; //axios拦截器
-import "@/permission"; //权控
 import * as mUtils from "@/common/js/mUtils";
 import config from "@/config";
 import filter from './filters/index';
@@ -50,6 +49,7 @@ Vue.prototype.$config = config;
 // String.prototype.replaceAll = function (s1, s2) {
 //   return this.replace(new RegExp(s1, "gm"), s2);
 // }
+import "@/permission"; //权控
 
 Vue.config.productionTip = false;
 
