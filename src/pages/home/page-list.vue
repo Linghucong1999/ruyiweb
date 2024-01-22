@@ -31,13 +31,20 @@
             协作作品({{ shareCount }})
           </div>
         </div>
-        <div class="page-item-wrapper" v-loading="loading">难受</div>
+
+        <div class="page-item-wrapper" v-loading="loading">
+          <div class="page-item">
+            <Thumbnail />
+          </div>
+        </div>
       </div>
     </el-scrollbar>
   </div>
 </template>
 <script>
+import Thumbnail from "@/components/thumbnail.vue";
 export default {
+  components: { Thumbnail },
   data() {
     return {
       loading: false,
