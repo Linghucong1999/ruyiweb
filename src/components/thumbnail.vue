@@ -11,6 +11,8 @@
   </div>
 </template>
 <script>
+// import editDataModel from "@/pages/editor/DataModel";
+
 export default {
   props: {
     pageTye: {
@@ -32,7 +34,11 @@ export default {
     };
   },
   methods: {
-    newPage() {},
+    newPage() {
+      // let newPageData = editDataModel.getProjectConfig();
+      // this.loading = true;
+      // this.$api
+    },
   },
 };
 </script>
