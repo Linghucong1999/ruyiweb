@@ -60,7 +60,7 @@ let pageConfig = {
 let projectConfig = {
     name: '',
     title: '未命名场景',
-    description: '如意如意，按我心意',
+    description: '无代码平台，构建页面从未如此简单',
     coverImage: '',
     auther: '',
     script: '',
