@@ -5,7 +5,8 @@
     >
   </div>
   <div v-else v-loading="loading" class="page-thumbnail-panel create">
-    <el-button type="primary" @click="newPage" icon="el-icon-plus"
+    <el-button type="primary" size="small" @click="newPage"
+icon="el-icon-plus"
       >新建页面</el-button
     >
   </div>
