@@ -58,6 +58,11 @@ export default new Router({
                             component: () => import('@/pages/home/template-list.vue'),
                         }
                     ]
+                },
+                {
+                    path: 'edit',
+                    name: 'Edit',
+                    component: () => import('@/pages/editor/index.vue'),
                 }
             ]
         },

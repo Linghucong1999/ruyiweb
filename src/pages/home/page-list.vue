@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix my-page-list">
     <div class="page-search-wrapper bg-white">
-      <el-tabs v-model="searchForm.pageMode" @tab-click="handlePageModeClick">
+      <el-tabs v-model="searchParams.pageMode" @tab-click="handlePageModeClick">
         <el-tab-pane
           v-for="(item, index) in pageModeList"
           :key="index"
@@ -18,7 +18,7 @@
           <div
             class="my-page-nav-item"
             @click="doSearch('my')"
-            :class="{ active: searchForm.type === 'my' }"
+            :class="{ active: searchParams.type === 'my' }"
           >
             我的作品({{ myCount }})
           </div>
@@ -26,7 +26,7 @@
           <div
             class="my-page-nav-item"
             @click="doSearch('cooperation')"
-            :class="{ active: searchForm.type === 'cooperation' }"
+            :class="{ active: searchParams.type === 'cooperation' }"
           >
             协作作品({{ shareCount }})
           </div>
@@ -34,8 +34,10 @@
 
         <div class="page-item-wrapper" v-loading="loading">
           <div class="page-item">
-            <Thumbnail />
+            <Thumbnail :page-tye="searchParams.pageMode" />
           </div>
+
+          <div class="page-item"></div>
         </div>
       </div>
     </el-scrollbar>
@@ -48,17 +50,19 @@ export default {
   data() {
     return {
       loading: false,
-      searchForm: {
+      searchParams: {
         type: "my",
         pageMode: "H5",
       },
       pageModeList: [],
       myCount: 0,
       shareCount: 0,
+      pageList: [],
     };
   },
   created() {
     this.pageModeList = this.$config.pageModeList;
+    this.getAllPageList();
   },
   methods: {
     handlePageModeClick(tab, event) {
@@ -66,6 +70,14 @@ export default {
     },
     doSearch(type) {
       console.log(type);
+    },
+    //获取所有页面
+    getAllPageList() {
+      this.$api.getAllPage(this.searchParams).then((res) => {
+        this.pageList = res.body.pages || [];
+        this.myCount = res.body.myPageCount;
+        this.shareCount = res.body.myCooperationPageCount;
+      });
     },
   },
 };

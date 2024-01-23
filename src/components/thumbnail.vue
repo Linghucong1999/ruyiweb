@@ -12,7 +12,7 @@ icon="el-icon-plus"
   </div>
 </template>
 <script>
-// import editDataModel from "@/pages/editor/DataModel";
+import editDataModel from "@/pages/editor/DataModel";
 
 export default {
   props: {
@@ -36,9 +36,19 @@ export default {
   },
   methods: {
     newPage() {
-      // let newPageData = editDataModel.getProjectConfig();
-      // this.loading = true;
-      // this.$api
+      let newPageData = editDataModel.getProjectConfig();
+      this.loading = true;
+      this.$api
+        .createPage(newPageData)
+        .then((res) => {
+          this.loading = false;
+          if (res.body) {
+            this.$router.push({ name: "Edit", query: { id: res.body._id } });
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
   },
 };
