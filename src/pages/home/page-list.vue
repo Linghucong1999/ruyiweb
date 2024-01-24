@@ -37,7 +37,15 @@
             <Thumbnail :page-tye="searchParams.pageMode" />
           </div>
 
-          <div class="page-item"></div>
+          <div class="page-item-list">
+            <div
+              class="page-item"
+              v-for="(item, index) in pageList"
+              :key="index"
+            >
+              <Thumbnail :page-data="item" @showPreview="preview" />
+            </div>
+          </div>
         </div>
       </div>
     </el-scrollbar>
@@ -58,6 +66,8 @@ export default {
       myCount: 0,
       shareCount: 0,
       pageList: [],
+      showPreview: false,
+      previewId: "",
     };
   },
   created() {
@@ -78,6 +88,11 @@ export default {
         this.myCount = res.body.myPageCount;
         this.shareCount = res.body.myCooperationPageCount;
       });
+    },
+    //预览
+    preview(id) {
+      this.previewId = id;
+      this.showPreview = true;
     },
   },
 };
@@ -110,4 +125,12 @@ export default {
     }
   }
 }
+.page-item-list {
+  display: flex;
+  flex-direction: row;
+}
+.page-item {
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
 </style>
