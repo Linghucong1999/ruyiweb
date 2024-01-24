@@ -1,18 +1,24 @@
 <template>
   <div>
-    <div class="page-thumbnail-panel" v-loading="loading" v-if="pageData">
-      <span class="unpublish" v-if="!pageData.isPublish && showPublishState"
-        >未发布</span
-      >
-      <div class="thumbnail-panel-cover">
-        <div class="header-mask">
-          <div class="details-btn" @click="preview(pageData._id)">预览</div>
-        </div>
-        <div class="image-wrapper">
-          <img :src="pageData.coverImage || defaultImageCover" />
+    <div v-if="pageData">
+      <div class="page-thumbnail-panel" v-loading="loading">
+        <span class="unpublish" v-if="!pageData.isPublish && showPublishState"
+          >未发布</span
+        >
+        <div class="thumbnail-panel-cover">
+          <div class="header-mask">
+            <div class="details-btn" @click="preview(pageData._id)">预览</div>
+          </div>
+          <div class="image-wrapper">
+            <img :src="pageData.coverImage || defaultImageCover" />
+          </div>
         </div>
       </div>
+      <div class="page-item-title">
+        <el-tag type="warning" effect="plain">{{ pageData.title || "未命名作品" }}</el-tag>
+      </div>
     </div>
+
     <div v-else v-loading="loading" class="page-thumbnail-panel-footer create">
       <el-button
         type="primary"
@@ -100,6 +106,7 @@ export default {
     padding-top: 92px;
     color: #f8f1f1;
     text-align: center;
+    cursor: pointer;
     transition: top 0.28s ease-in-out, opacity 0.28s ease-in-out,
       height 0.28s ease-in-out;
   }
@@ -133,5 +140,15 @@ export default {
       object-fit: cover;
     }
   }
+}
+
+.page-item-title {
+  height: 36px;
+  width: 100%;
+  line-height: 36px;
+  padding: 0 8px;
+  // font-size: 16px;
+  text-align: center;
+  font-weight:bold;
 }
 </style>
