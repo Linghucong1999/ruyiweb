@@ -29,7 +29,7 @@ const configObj = {
             disabled: false
         }, {
             value: 'longPage',
-            label: '长页H5',
+            label: 'WebAPP',
             disabled: false
         }, {
             name: 'relativePage',
