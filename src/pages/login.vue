@@ -118,6 +118,8 @@
 <script>
 import userModel from "@/libs/userModel";
 import QRCode from "qrcodejs2";
+import { encryption } from "@/util/dataencryption";
+
 export default {
   data() {
     return {
@@ -161,9 +163,11 @@ export default {
       disableEamilButton: false, //发送验证码后禁用
       countDown: 60, //倒计时
       formUrl: "",
+      publickey: "",
     };
   },
   created() {
+    this.getRsa();
     this.formUrl = this.$route.query.from
       ? window.decodeURIComponent(this.$route.query.from)
       : "";
@@ -172,6 +176,11 @@ export default {
     this.createQrcode();
   },
   methods: {
+    //获取RSA
+    async getRsa() {
+      let res = await userModel.getRSAkey();
+      this.publickey = res.publicKey;
+    },
     doSubmit(form) {
       this.$refs[form].validate((vaild) => {
         if (vaild) {
@@ -185,7 +194,8 @@ export default {
     },
     async doLogin() {
       let formData = { ...this.formData };
-      let res = await userModel.doLogin(formData);
+      formData.password = encryption(this.formData.password, this.publickey);
+      let res=await userModel.doLogin(formData);
       if (Object.keys(res).length !== 0) {
         this.formUrl
           ? this.$router.push(this.formUrl)
@@ -194,6 +204,7 @@ export default {
     },
     async doRegister() {
       let formData = { ...this.formData };
+      formData.password = encryption(this.formData.password, this.publickey);
       await userModel.doRegister(formData);
       this.formUrl
         ? this.$router.push(this.formUrl)
