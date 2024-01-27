@@ -23,6 +23,50 @@
           >{{ pageData.title || "未命名作品" }}</el-tag
         >
       </div>
+
+      <div class="thumbnail-panel-btn" v-if="btnList.length">
+        <el-button
+          class="btn-wrapper"
+          v-if="btnList.includes('edit')"
+          @click="edit"
+          type="text"
+          size="mini"
+          >编辑</el-button
+        >
+        <el-button
+          class="btn-wrapper"
+          type="text"
+          size="mini"
+          v-if="btnList.includes('useTemplate')"
+          >使用模板</el-button
+        >
+        <el-button
+          class="btn-wrapper"
+          v-if="btnList.includes('copyTemplate')"
+          type="text"
+          size="mini"
+          >复制</el-button
+        >
+        <div class="btn-wrapper-more" v-if="showMoreBtn">
+          <el-dropdown @command="command" placement="top-start" size="mini">
+            <el-button type="text" size="mini"
+              >更多<i class="el-icon-more el-icon--right"></i
+            ></el-button>
+            <el-dropdown-menu slot="dropdown">
+              <template v-for="(item, index) in operationDataList">
+                <el-dropdown-item
+                  :key="index"
+                  :command="item.eventType"
+                  :class="item.extraClassName"
+                  :icon="item.iconClass"
+                  v-if="btnList.includes(item.eventType)"
+                  >{{ item.title }}</el-dropdown-item
+                >
+              </template>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
     </div>
 
     <div v-else v-loading="loading" class="page-thumbnail-panel-footer create">
@@ -53,11 +97,69 @@ export default {
       type: Boolean,
       default: true,
     },
+    btnList: {
+      type: Array,
+      default: () => [],
+    },
+    showMoreBtn: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
       loading: false,
       defaultImageCover: require("@/common/images/sign_bg.47eec442.png"),
+      operationDataList: [
+        {
+          title: "发布",
+          eventType: "publish",
+          extraClassName: "",
+          iconClass: "el-icon-upload",
+        },
+        {
+          title: "发布模板市场",
+          eventType: "publishTemplate",
+          extraClassName: "",
+          iconClass: "el-icon-s-shop",
+        },
+        {
+          title: "复制链接",
+          eventType: "copyUrl",
+          extraClassName: "",
+          iconClass: "el-icon-connection",
+        },
+        {
+          title: "设为我的模板",
+          eventType: "setTemplate",
+          extraClassName: "",
+          iconClass: "el-icon-document-copy",
+        },
+        {
+          title: "页面数据",
+          eventType: "viewPageData",
+          extraClassName: "",
+          iconClass: "el-icon-document",
+        },
+        {
+          title: "协作设置",
+          eventType: "cooperation",
+          extraClassName: "",
+          iconClass: "el-icon-s-operation",
+        },
+        {
+          title: "删除",
+          eventType: "delete",
+          extraClassName: "error",
+          iconClass: "el-icon-delete",
+        },
+        {
+          title: "退出协作",
+          eventType: "unCooperation",
+          extraClassName: "error",
+          iconClass: "el-icon-right",
+        },
+      ],
     };
   },
   methods: {
@@ -78,6 +180,13 @@ export default {
     },
     preview(id) {
       this.$emit("showPreview", id);
+    },
+    command(type) {
+      console.log(type);
+    },
+    //编辑
+    edit() {
+      this.$router.push({ name: "Edit", query: { id: this.pageData._id } });
     },
   },
 };
@@ -158,5 +267,22 @@ export default {
   // font-size: 16px;
   text-align: center;
   font-weight: bold;
+}
+
+.thumbnail-panel-btn {
+  height: 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .btn-wrapper {
+    flex: 1;
+    text-align: center;
+  }
+  .btn-wrapper-more {
+    flex: 1;
+    text-align: center;
+    line-height: 36px;
+  }
 }
 </style>

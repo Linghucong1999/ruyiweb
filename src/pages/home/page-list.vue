@@ -43,7 +43,11 @@
               v-for="(item, index) in pageList"
               :key="index"
             >
-              <Thumbnail :page-data="item" @showPreview="preview" />
+              <Thumbnail
+                :page-data="item"
+                @showPreview="preview"
+                :btn-list="operationBtnType(item.isPublish)"
+              />
             </div>
           </div>
         </div>
@@ -94,6 +98,18 @@ export default {
       this.previewId = id;
       this.showPreview = true;
     },
+    //按钮类型
+    operationBtnType(isPublished) {
+      let baseBtn = ["edit", "copyTemplate", "setTemplate"];
+      if (this.searchParams.type === "my") {
+        baseBtn.push("cooperation", "delete");
+      } else if (this.searchParams.type === "cooperation") {
+        baseBtn.push("unCooperation");
+      }
+      baseBtn.push(isPublished ? "copyUrl" : "publish", "viewPageData");
+
+      return baseBtn;
+    },
   },
 };
 </script>
@@ -130,7 +146,7 @@ export default {
   flex-direction: row;
 }
 .page-item {
-    margin-right: 20px;
-    margin-bottom: 20px;
-  }
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
 </style>
