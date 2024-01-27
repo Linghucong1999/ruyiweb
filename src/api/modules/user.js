@@ -3,6 +3,9 @@
  */
 import $axios from "@/service/httpServer";
 
+// 获取RSA加密公钥
+export const getRsaPublicKey = () => $axios.get("/ruyi/auth/rsa/login/key");
+
 //登录
 export const login = data => $axios.post("/ruyi/auth/login", data);
 

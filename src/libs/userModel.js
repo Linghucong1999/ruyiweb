@@ -4,7 +4,7 @@
 
 import store from "@/store";
 import router from "@/router";
-import { login, register, getUserInfo, loginByEmail, sendEmailCode, resetPasswordFirstStep, resetPasswordSecondStep } from "@/api";
+import { login, register, getUserInfo, loginByEmail, sendEmailCode, resetPasswordFirstStep, resetPasswordSecondStep, getRsaPublicKey } from "@/api";
 
 let userModel = {
     /**
@@ -25,6 +25,14 @@ let userModel = {
         let expiration_time = new Date().getTime();
         return (expiration_time - userData.expiration_time) >= 1800000;
 
+    },
+
+    /**
+     * 获取RSA加密公钥
+     */
+    async getRSAkey() {
+        let res = await getRsaPublicKey();
+        return res.body;
     },
 
     /**
