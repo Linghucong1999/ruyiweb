@@ -15,7 +15,13 @@
         </div>
       </div>
       <div class="page-item-title">
-        <el-tag type="warning" effect="plain">{{ pageData.title || "未命名作品" }}</el-tag>
+        <el-tag
+          :type="
+            !pageData.isPublish && showPublishState ? 'warning' : 'success'
+          "
+          effect="plain"
+          >{{ pageData.title || "未命名作品" }}</el-tag
+        >
       </div>
     </div>
 
@@ -85,6 +91,8 @@ export default {
   display: flex;
   position: relative;
   transition: all 0.3s ease-in-out 0s;
+  box-shadow: 13px -3px 19px -10px rgba(0, 0, 0, 0.1);
+
   &:hover {
     box-shadow: 0 0 10px #ccc;
     transform: translate3d(0, -2px, 0);
@@ -149,6 +157,6 @@ export default {
   padding: 0 8px;
   // font-size: 16px;
   text-align: center;
-  font-weight:bold;
+  font-weight: bold;
 }
 </style>
