@@ -22,8 +22,9 @@ const actions = {
     /**
      * 初始化编辑项目数据
      */
-}
+};
 
 export default {
-    state
+    state,
+    actions,
 };
