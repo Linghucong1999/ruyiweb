@@ -9,9 +9,17 @@ export default {
       loading: false,
     };
   },
-  // created(){
-
-  // }
+  created() {
+    this.$store.dispatch("setProjectData");
+    this.id = this.$route.query.id;
+  },
+  methods:{
+    // 初始化页面
+    initPage(){
+      this.loading = true;
+      // this.$api.
+    }
+  },
 };
 </script>
 <style lang="less" scoped>

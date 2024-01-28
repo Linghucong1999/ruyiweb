@@ -1,5 +1,5 @@
-// import { cloneDeep, merge } from "lodash";
-
+import { cloneDeep } from "lodash";
+import editorProjectConfig from '@/pages/editor/DataModel';
 /**
  * 编辑数据状态存储
  */
@@ -18,13 +18,102 @@ const state = {
     activeAttrEditCollapse: ['1'],
 };
 
+// 记住 commit唤醒的是mutations,dispatch唤醒的是actions,action中可以通过调用commit方法来触发mutation
+
 const actions = {
     /**
      * 初始化编辑项目数据
+     * @param {*} state
+     * @param {*} data
      */
+    setProjectData({ commit, state, dispatch }, data) {
+        let projectData = data;
+        if (!projectData) {
+            projectData = editorProjectConfig.getProjectConfig();
+        }
+        commit('setProjectData', projectData);
+
+        // 选中的项目没有页面的话，就为此项目新建一个页面
+        if (!state.projectData.pages || state.projectData.pages.length === 0) {
+            dispatch('addPage');
+        }
+        dispatch('setActivePageUUID', state.projectData.pages[0].uuid);
+    },
+
+    /**
+     * 设置当前页面的uuid
+     * @param state
+     * @param data
+     */
+    setActivePageUUID({ commit }, data) {
+        commit('setActivePageUUID', data);
+        //当前选中的页面切换后清空元素选中的uuid
+        commit('setActiveElementUUID', '');
+    },
+
+    /**
+     * 添加页面
+     *
+     */
+    addPage({ commit, state }, uuid) {
+        let data = editorProjectConfig.getProjectConfig();
+        let index = -1;
+        if (uuid) {
+            index = state.projectData.pages.findIndex(item => item.uuid === uuid);
+        } else {
+            index = state.projectData.pages.length - 1;
+        }
+        commit('insertPage', data, index);
+        commit('addHistoryCache');
+    }
+};
+
+const mutations = {
+    //页面设置
+
+    setProjectData(state, data) {
+        state.projectData = data;
+    },
+
+    //新增页面
+    insertPage(state, data, index) {
+        if (index) {
+            state.projectData.pages.splice(index, 0, data);
+        } else {
+            state.projectData.pages.push(data);
+        }
+    },
+    setActivePageUUID(state, uuid) {
+        state.acticePageUUID = uuid;
+    },
+    setActiveElementUUID(state, uuid) {
+        state.acticeElementUUID = uuid;
+    },
+
+    //历史记录
+
+    /**
+     * 新增一条历史记录
+     * @param {*} state
+     */
+    addHistoryCache(state) {
+        if (state.currentHistoryIndex + 1 < state.historyCache.length) {
+            state.historyCache.splice(state.currentHistoryIndex + 1);
+        }
+        state.historyCache.push({
+            projectData: cloneDeep(state.projectData),
+            activePageUUID: state.activePageUUID,
+            acticeElementUUID: state.acticeElementUUID,
+        });
+
+        //限制uudo步数，记录步数
+        state.historyCache.splice(100);
+        state.currentHistoryIndex++;
+    }
 };
 
 export default {
     state,
     actions,
+    mutations,
 };
