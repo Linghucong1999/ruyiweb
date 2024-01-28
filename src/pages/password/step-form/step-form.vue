@@ -89,6 +89,7 @@
 </template>
 <script>
 import userModel from "@/libs/userModel";
+import { encryption } from "@/util/dataencryption";
 export default {
   name: "StepForm",
   data() {
@@ -113,7 +114,11 @@ export default {
           },
         ],
       },
+      publicKey: "",
     };
+  },
+  created() {
+    this.getRsa();
   },
   methods: {
     async handleSubmit() {
@@ -123,14 +128,18 @@ export default {
       }
 
       let data = {
-        newPassword: this.formData.newPassword,
-        reconPassword: this.formData.reconPassword,
+        newPassword: encryption(this.formData.newPassword, this.publicKey),
+        reconPassword: encryption(this.formData.reconPassword, this.publicKey),
       };
 
       let res = await userModel.doResetPasswordSecondStep(data);
       if (res.status === true) {
-        this.$router.push({ path:'/login' });
+        this.$router.push({ path: "/login" });
       }
+    },
+    async getRsa() {
+      let res = await userModel.getRSAkey();
+      this.publicKey = res.publicKey;
     },
   },
 };

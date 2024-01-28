@@ -57,6 +57,7 @@
 </template>
 <script>
 import userModel from "@/libs/userModel";
+import { encryption } from "@/util/dataencryption";
 export default {
   data() {
     return {
@@ -93,9 +94,17 @@ export default {
           { required: true, message: "请输入旧密码", trigger: "blur" },
         ],
       },
+      publicKey: "",
     };
   },
+  created() {
+    this.getRsa();
+  },
   methods: {
+    async getRsa() {
+      let res = userModel.getRSAkey();
+      this.publicKey = res.publicKey;
+    },
     show() {
       this.dialogResetPassword = true;
     },
@@ -107,11 +116,17 @@ export default {
       this.$refs["formData"].validate((valid) => {
         if (valid) {
           this.loading = true;
+          const oldPassword = encryption(this.form.oldPassword, this.publicKey);
+          const newPassword = encryption(this.form.newPassword, this.publicKey);
+          const reconPassword = encryption(
+            this.form.reconPassword,
+            this.publicKey
+          );
           this.$api
             .updateUserPassword({
-              oldPassword: this.form.oldPassword,
-              newPassword: this.form.newPassword,
-              reconPassword: this.form.reconPassword,
+              oldPassword: oldPassword,
+              newPassword: newPassword,
+              reconPassword: reconPassword,
             })
             .then(() => {
               this.loading = false;
