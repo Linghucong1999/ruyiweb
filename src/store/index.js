@@ -4,6 +4,7 @@ import Vuex from "vuex";
 
 //模块
 import user from "./module/user";
+import pageEditor from "./module/editor";
 
 /**
  * 全局状态管理
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     getters,
     modules: {
         user,
+        pageEditor,
     }
 });
 

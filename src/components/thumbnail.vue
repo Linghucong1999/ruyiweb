@@ -82,6 +82,7 @@
 </template>
 <script>
 import editDataModel from "@/pages/editor/DataModel";
+import { operationDataList } from "@/utils/commanJson";
 
 export default {
   props: {
@@ -110,56 +111,7 @@ export default {
     return {
       loading: false,
       defaultImageCover: require("@/common/images/sign_bg.47eec442.png"),
-      operationDataList: [
-        {
-          title: "发布",
-          eventType: "publish",
-          extraClassName: "",
-          iconClass: "el-icon-upload",
-        },
-        {
-          title: "发布模板市场",
-          eventType: "publishTemplate",
-          extraClassName: "",
-          iconClass: "el-icon-s-shop",
-        },
-        {
-          title: "复制链接",
-          eventType: "copyUrl",
-          extraClassName: "",
-          iconClass: "el-icon-connection",
-        },
-        {
-          title: "设为我的模板",
-          eventType: "setTemplate",
-          extraClassName: "",
-          iconClass: "el-icon-document-copy",
-        },
-        {
-          title: "页面数据",
-          eventType: "viewPageData",
-          extraClassName: "",
-          iconClass: "el-icon-document",
-        },
-        {
-          title: "协作设置",
-          eventType: "cooperation",
-          extraClassName: "",
-          iconClass: "el-icon-s-operation",
-        },
-        {
-          title: "删除",
-          eventType: "delete",
-          extraClassName: "error",
-          iconClass: "el-icon-delete",
-        },
-        {
-          title: "退出协作",
-          eventType: "unCooperation",
-          extraClassName: "error",
-          iconClass: "el-icon-right",
-        },
-      ],
+      operationDataList: operationDataList,
     };
   },
   methods: {
@@ -171,7 +123,10 @@ export default {
         .then((res) => {
           this.loading = false;
           if (res.body) {
-            this.$router.push({ name: "Edit", query: { id: res.body._id } });
+            this.$router.push({
+              name: "Edit",
+              query: { id: res.body._id, page: "newPage" },
+            });
           }
         })
         .catch(() => {

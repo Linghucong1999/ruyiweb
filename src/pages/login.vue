@@ -118,7 +118,7 @@
 <script>
 import userModel from "@/libs/userModel";
 import QRCode from "qrcodejs2";
-import { encryption } from "@/util/dataencryption";
+import { encryption } from "@/utils/dataencryption";
 
 export default {
   data() {

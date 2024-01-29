@@ -57,7 +57,7 @@
 </template>
 <script>
 import userModel from "@/libs/userModel";
-import { encryption } from "@/util/dataencryption";
+import { encryption } from "@/utils/dataencryption";
 export default {
   data() {
     return {
