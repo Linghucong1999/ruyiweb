@@ -6,6 +6,7 @@ import httpServer from './service/httpServer'; //axios拦截器
 import * as mUtils from "@/common/js/mUtils";
 import config from "@/config";
 import filter from './filters/index';
+import lottie from 'vue-lottie';
 
 import * as API from "@/api/index";
 import Element from "element-ui";
@@ -17,6 +18,7 @@ import VueClipboard from 'vue-clipboard2';
 
 Vue.use(VueClipboard);
 Vue.use(Element);
+Vue.component("lottie", lottie);
 
 /**
  * 引入公共方法
