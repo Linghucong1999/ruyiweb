@@ -26,6 +26,7 @@
               >
                 <el-upload
                   class="user-image-upload-input"
+                  accept="image/jpeg,image/png,image/jpg"
                   :action="avaterurl"
                   :before-upload="beforeUploadAvatar"
                   :show-file-list="false"
