@@ -89,7 +89,7 @@ let userModel = {
             store.commit('updateUserInfo', res.body.userInfo);
             return res.body;
         } catch (err) {
-            return err;
+            return err.data;
         }
     },
 
@@ -133,7 +133,7 @@ let userModel = {
         // 获取sessionStorage中的beforeLoginUrl
         let url = window.sessionStorage.getItem('beforeLoginUrl');
         // 判断beforeLoginUrl是否存在，或者是否包含/login
-        if (!url || url.indexOf('/login') != -1) {
+        if (!url || ['/login'].includes(url)) {
             // 如果不存在或者包含/login，则跳转到根路由
             router.push('/');
         } else {
