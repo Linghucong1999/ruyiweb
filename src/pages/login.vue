@@ -134,6 +134,7 @@ export default {
   },
   created() {
     this.getRsa();
+    console.log('测试');
     this.formUrl = this.$route.query.from
       ? window.decodeURIComponent(this.$route.query.from)
       : "";
