@@ -3,11 +3,7 @@
     <!-- 左侧导航栏 -->
     <div class="editor-side-bar">
       <el-tabs tab-position="left" v-model="activeSideBar">
-        <el-tab-pane
-          v-for="(item, index) in sideBarMenus"
-          :key="index"
-          :name="item.value"
-        >
+        <el-tab-pane v-for="(item, index) in sideBarMenus" :key="index" :name="item.value">
           <div slot="label">
             <i :class="item.elementUiIcon"></i>{{ item.label }}
           </div>
@@ -74,5 +70,14 @@ export default {
 
 ::v-deep .el-tabs__item:hover {
   background-color: #ecf5ff;
+}
+
+::v-deep.el-tabs--left .el-tabs__active-bar.is-left {
+  right: revert-layer;
+  left: 0;
+}
+
+::v-deep .el-tabs__active-bar {
+  background-color: #fff;
 }
 </style>

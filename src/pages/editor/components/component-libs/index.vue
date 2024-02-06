@@ -8,12 +8,8 @@
             <el-tag type="success">{{ item.title }}</el-tag>
           </div>
           <div v-if="item.components && item.components.length">
-            <div
-              class="components-libs-item"
-              v-for="(element, rowindex) in item.components"
-              :key="rowindex"
-              @click="handleClick(element)"
-            >
+            <div class="components-libs-item" v-for="(element, rowindex) in item.components" :key="rowindex"
+              @click="handleClick(element)">
               <div class="lib-item-img"><i :class="[element.icon]"></i></div>
               <div class="lib-item-title">{{ element.title }}</div>
             </div>
@@ -64,6 +60,7 @@ export default {
   font-size: 12px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+
   &:hover {
     background: #ecf5ff;
     border: 1px solid #ecf5ff;
@@ -82,8 +79,8 @@ export default {
   height: 200px;
 }
 
-::v-deep.el-tabs--left .el-tabs__active-bar.is-left {
-  left: 0;
-  right: auto;
+::v-deep .el-tag.el-tag--success {
+  width: 125px;
+  text-align: center;
 }
 </style>
