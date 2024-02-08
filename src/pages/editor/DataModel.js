@@ -1,5 +1,5 @@
-import { createUUID } from '@/common/js/utils';
-import { cloneDeep } from 'lodash';
+import { createUUID,deepClone } from '@/common/js/utils';
+import { cloneDeep,merge } from 'lodash';
 import $config from '@/config/index';
 
 let elementConfig = {
@@ -82,10 +82,38 @@ let getProjectConfig = () => {
     project.pages.push({ ...onePage });
     return project;
 };
+
+let getElementConfig = (element,extendStyle={}) => {
+    const elementData = cloneDeep(element);
+    const type = elementData.valueType || 'String';
+    const dict = {
+        'String': '',
+        'Array': [],
+        'Object': {},
+        'Boolean': false,
+        'Number': 0,
+
+    };
+    const elementConfigData = cloneDeep(elementConfig);
+    const config = {
+        uuid: createUUID(),
+        ...elementConfigData,
+        elName: elementData,
+        propsValue: deepClone(elementData.needProps || {}),
+    };
+
+    // 样式
+    config.commonStyle = merge(config.commonStyle, elementData.defaultStyle);
+    config.commonStyle = merge(config.commonStyle, extendStyle);
+    config.value = element.defaultValue || dict[type];
+    config.valueType = type;
+    return config;
+};
 export default {
     elementConfig,
     pageConfig,
     projectConfig,
     getPageConfig,
     getProjectConfig,
+    getElementConfig,
 };

@@ -65,7 +65,20 @@ const actions = {
         }
         commit('insertPage', data, index);
         commit('addHistoryCache');
-    }
+    },
+
+    /**
+     * 添加元素
+     * @param commit
+     * @param {*} data
+     */
+    addElement({ commit,state }, eldata) {
+        const activePage = getters.activePage(state);
+        const data = editorProjectConfig.getElementConfig(eldata, { zIndex: activePage.elements.length + 1 });
+        commit('addElement', data);
+        commit('setActiveElementUUID', data.uuid);
+        commit('addHistoryCache');
+    },
 };
 
 const mutations = {
@@ -109,11 +122,34 @@ const mutations = {
         //限制uudo步数，记录步数
         state.historyCache.splice(100);
         state.currentHistoryIndex++;
+    },
+
+    // 元素相关
+
+    /**
+     *往画板添加元素
+     */
+    addElement(state, eldata) {
+        const index = state.projectData.pages.findIndex(item =>{return item.uuid === state.acticePageUUID;});
+        state.projectData.pages[index].elements.push(eldata);
     }
 };
 
+const getters = {
+
+    /**
+     * 当前选中页面
+     */
+    activePage() {
+        if (!state.projectData.pages || !state.acticePageUUID) {
+            return {commonStyle:{},config:{}};
+        }
+        return state.projectData.pages.find(item=>{return item.uuid === state.acticePageUUID;});
+    }
+};
 export default {
     state,
     actions,
     mutations,
+    getters
 };

@@ -8,8 +8,12 @@
             <el-tag type="success">{{ item.title }}</el-tag>
           </div>
           <div v-if="item.components && item.components.length">
-            <div class="components-libs-item" v-for="(element, rowindex) in item.components" :key="rowindex"
-              @click="handleClick(element)">
+            <div
+              class="components-libs-item"
+              v-for="(element, rowindex) in item.components"
+              :key="rowindex"
+              @click="handleClick(element)"
+            >
               <div class="lib-item-img"><i :class="[element.icon]"></i></div>
               <div class="lib-item-title">{{ element.title }}</div>
             </div>
@@ -38,6 +42,16 @@ export default {
   methods: {
     handleClick(element) {
       console.log(element);
+      // let props = this.get
+    },
+    /**
+     * 根据element获取组件默认的props实列
+     */
+    getComponentProps(elName) {
+      let elComponentData;
+      // for(let key in )
+      console.log(elName);
+      return elComponentData;
     },
   },
 };
