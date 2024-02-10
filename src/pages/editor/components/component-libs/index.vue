@@ -30,8 +30,12 @@
   </div>
 </template>
 <script>
+import { camelCase } from "lodash";
 import { elementConfig } from "@/utils/commanJson";
 import bg from "@/assets/Model/bg.json";
+import { ruyi_register_components_object } from "@/plugins/index";
+
+window.ruyi_register_components_object = ruyi_register_components_object;
 export default {
   data() {
     return {
@@ -41,17 +45,31 @@ export default {
   },
   methods: {
     handleClick(element) {
-      console.log(element);
-      // let props = this.get
+      let props = this.getComponentProps(element.elName);
+      this.$store.dispatch("addElement", { ...element, needProps: props });
     },
     /**
      * 根据element获取组件默认的props实列
      */
     getComponentProps(elName) {
       let elComponentData;
-      // for(let key in )
-      console.log(elName);
-      return elComponentData;
+      for (let key in ruyi_register_components_object) {
+        if (key.toLowerCase() === camelCase(elName).toLowerCase()) {
+          elComponentData = ruyi_register_components_object[key];
+          break;
+        }
+      }
+
+      if (!elComponentData) return {};
+
+      let props = {};
+      for (let key in elComponentData.props) {
+        props[key] = [Object, Array].includes(elComponentData.props[key].type)
+          ? elementConfig.props[key].default()
+          : elementConfig.props[key].default;
+      }
+
+      return props;
     },
   },
 };
