@@ -23,7 +23,10 @@
     <!-- 页面编辑区域 -->
     <div class="editor-main">
       <div class="control-bar-wrapper">
-        <cantrol-bar></cantrol-bar>
+        <cantrol-bar :scale.sync="canvasConfig.scale"></cantrol-bar>
+      </div>
+      <div>
+        <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
       </div>
     </div>
   </div>
@@ -32,10 +35,12 @@
 import { sideBarMenus } from "@/utils/commanJson";
 import ComponentLibs from "./components/component-libs/index.vue";
 import CantrolBar from "./components/control-bar.vue";
+import EditorPan from "./components/editor-panel/index.vue";
 export default {
   components: {
     ComponentLibs,
     CantrolBar,
+    EditorPan,
   },
   data() {
     return {
@@ -43,6 +48,9 @@ export default {
       loading: false,
       activeSideBar: "componentLibs",
       sideBarMenus: sideBarMenus,
+      canvasConfig: {
+        scale: 1,
+      },
     };
   },
   created() {
