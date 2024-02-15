@@ -115,4 +115,8 @@ export default {
   width: 125px;
   text-align: center;
 }
+
+.components-libs-wrapper {
+  user-select: none;
+}
 </style>
