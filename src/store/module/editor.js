@@ -79,6 +79,30 @@ const actions = {
         commit('setActiveElementUUID', data.uuid);
         commit('addHistoryCache');
     },
+
+    // 历史记录
+    /**
+     * 计入历史
+     */
+    addHistoryCache({ commit}) {
+        commit('addHistoryCache');
+    },
+    /**
+     *撤销历史
+     */
+    editorUndo({ commit, state }) {
+        if (!getters.canUndo(state)) return;
+        const prevState = state.historyCache[state.currentHistoryIndex - 1];
+        commit('relapceEditorState', cloneDeep(prevState));
+        commit('editorUndo');
+    },
+
+    editorRedo({ commit, state }) {
+        if (!getters.canRedo(state)) return;
+        const nextState = state.historyCache[state.currentHistoryIndex + 1];
+        commit('relapceEditorState', cloneDeep(nextState));
+        commit('editorRedo');
+    }
 };
 
 const mutations = {
@@ -124,6 +148,29 @@ const mutations = {
         state.currentHistoryIndex++;
     },
 
+    /**
+     *更新编辑器项目数据，从history中拿数据
+     */
+    relapceEditorState(state, data) {
+        state.projectData = cloneDeep(data.projectData);
+        state.acticePageUUID = data.acticePageUUID;
+        state.acticeElementUUID = data.acticeElementUUID;
+    },
+
+    /**
+     * 撤销操作
+     */
+    editorUndo(state) {
+        state.currentHistoryIndex--;
+    },
+
+    /**
+     * 重做按钮操作
+     */
+    editorRedo(state) {
+        state.currentHistoryIndex++;
+    },
+
     // 元素相关
 
     /**
@@ -145,7 +192,48 @@ const getters = {
             return {commonStyle:{},config:{}};
         }
         return state.projectData.pages.find(item=>{return item.uuid === state.acticePageUUID;});
+    },
+
+    /**
+     * 当前选中页面的索引
+     */
+    currentPageIndex(state) {
+        if (!state.projectData.pages) {
+            // 如果不存在页面就返回-1
+            return -1;
+        }
+        return state.projectData.pages.findIndex(item => { return item.uuid === state.acticePageUUID; });
+    },
+    /**
+     * 选中的页面元素索引
+     * @param {*} state
+     * @returns
+     */
+    activeElementIndex(state) {
+        if (!state.projectData.pages) return -1;
+        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.acticePageUUID);
+        if (currentPageIndex === -1) return -1;
+        return state.projectData.pages[currentPageIndex].elements.findIndex(item => item.uuid === state.acticeElementUUID);
+    },
+
+    /**
+     * 当前选中的元素
+     */
+    activeElement() {
+        if (!state.projectData.pages) return -1;
+        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.acticePageUUID);
+        if (currentPageIndex === -1) return -1;
+        return state.projectData.pages[currentPageIndex].elements.find(item => item.uuid === state.acticeElementUUID);
+    },
+
+    canUndo(state) {
+        return state.currentHistoryIndex > 0;
+    },
+
+    canRedo(state) {
+        return state.historyCache.length > state.currentHistoryIndex+1;
     }
+
 };
 export default {
     state,
