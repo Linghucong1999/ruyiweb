@@ -8,7 +8,15 @@
           width: projectData.width + 'px',
           height: projectData.height + 'px',
         }"
-      ></div>
+      >
+        <div
+          class="page-preview-wrapper"
+          ref="canvas-panel"
+          id="cancas-panel"
+          :style="a"
+        ></div>
+        <div class="page-wrapper-mask"></div>
+      </div>
     </div>
   </div>
 </template>
