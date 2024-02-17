@@ -1,5 +1,5 @@
-import { createUUID,deepClone } from '@/common/js/utils';
-import { cloneDeep,merge } from 'lodash';
+import { createUUID, deepClone } from '@/common/js/utils';
+import { cloneDeep, merge } from 'lodash';
 import $config from '@/config/index';
 
 let elementConfig = {
@@ -83,7 +83,7 @@ let getProjectConfig = () => {
     return project;
 };
 
-let getElementConfig = (element,extendStyle={}) => {
+let getElementConfig = (element, extendStyle = {}) => {
     const elementData = cloneDeep(element);
     const type = elementData.valueType || 'String';
     const dict = {
@@ -109,6 +109,26 @@ let getElementConfig = (element,extendStyle={}) => {
     config.valueType = type;
     return config;
 };
+
+/**
+ * 获取元素样式
+ */
+let getCommonStyle = (styleObj, scalingRatio = 1) => {
+    let needUnitStr = ['width', 'height', 'top', 'left', 'borderWidth', 'borderRadius', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomWidth', 'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'margin', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom', 'fontSize', 'letterSpacing', 'lineHeight', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'borderBottomColor', 'backgroundColor', 'borderColor', 'color', 'backgroundRepeat', 'backgroundPositionX', 'backgroundPositionY', 'backgroundSize'];
+    let style = {};
+
+    for (let key in styleObj) {
+        if (needUnitStr.includes(key)) {
+            style[key] = (styleObj[key] * scalingRatio) + 'px';
+        } else {
+            style[key] = styleObj[key];
+        }
+    }
+
+    style.transform = `rotate(${style.rotate}deg)`;
+    style.backgroundImage = style.backgroundImage ? `url(${style.backgroundImage})` : '';
+    return style;
+};
 export default {
     elementConfig,
     pageConfig,
@@ -116,4 +136,5 @@ export default {
     getPageConfig,
     getProjectConfig,
     getElementConfig,
+    getCommonStyle,
 };

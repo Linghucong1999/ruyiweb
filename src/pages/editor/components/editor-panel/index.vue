@@ -13,7 +13,7 @@
           class="page-preview-wrapper"
           ref="canvas-panel"
           id="cancas-panel"
-          :style="a"
+          :style="getCommonStyle(activePage.commonStyle)"
         ></div>
         <div class="page-wrapper-mask"></div>
       </div>
@@ -23,6 +23,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { ruyi_register_components_object } from "@/plugins/index";
+import editorProjectConfig from "../../DataModel";
 export default {
   props: {
     scale: {
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       editorPaneWidth: 0,
+      getCommonStyle: editorProjectConfig.getCommonStyle,
     };
   },
   computed: {
@@ -63,4 +65,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.editor-pane{
+  height: 100%;
+}
 </style>

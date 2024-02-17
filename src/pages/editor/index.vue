@@ -23,7 +23,10 @@
     <!-- 页面编辑区域 -->
     <div class="editor-main">
       <div class="control-bar-wrapper">
-        <cantrol-bar :scale.sync="canvasConfig.scale"></cantrol-bar>
+        <cantrol-bar
+          :scale.sync="canvasConfig.scale"
+          v-if="activeSideBar === 'componentLibs'"
+        ></cantrol-bar>
       </div>
       <div>
         <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
