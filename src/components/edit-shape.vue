@@ -1,6 +1,11 @@
 <template>
   <!-- 组件编辑外层拖拽，可编辑按钮，缩放改变盒子大小 -->
-  <div class="commonents-edit-shape" :class="{ active: active }">
+  <div
+    class="commonents-edit-shape"
+    :class="{ active: active }"
+    @click="handleTopWrapperClick"
+    @mousedown="handleMouseDown"
+  >
     <div
       class="edit-shape-point"
       v-for="(item, index) in active ? pointList : []"
@@ -83,6 +88,33 @@ export default {
       };
 
       return style;
+    },
+    /**
+     * 点击后设置选中的元素为当前活跃元素
+     */
+    handleTopWrapperClick(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    /**
+     * 鼠标选中元素拖拽事件
+     */
+    handleMouseDown(e) {
+      // 抛出事件让父组件设置当前元素选中状态
+      this.$emit("handleElementClick");
+
+      const pos = { ...this.defaultStyle };
+      let startY = e.clientY;
+      let startX = e.clientX;
+      let startTop = pos.top;
+      let startLeft = pos.left;
+      let firstTime = new Date().getTime(),
+        lastTime = "";
+      const move = (moveEvent) => {
+        // 移动的时候,不需要向后代元素传递事件,只需要单纯的移动就行
+        moveEvent.stopPropagation();
+        moveEvent.preventDefault();
+      };
     },
   },
 };
