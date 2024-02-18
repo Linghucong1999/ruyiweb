@@ -20,6 +20,7 @@
           </div>
 
           <div v-else>
+            <!-- 组件未开发的就给予一个lottie动画 -->
             <div class="background-components-zero">
               <lottie :options="{ animationData: animation }"></lottie>
             </div>
@@ -65,8 +66,8 @@ export default {
       let props = {};
       for (let key in elComponentData.props) {
         props[key] = [Object, Array].includes(elComponentData.props[key].type)
-          ? elementConfig.props[key].default()
-          : elementConfig.props[key].default;
+          ? elComponentData.props[key].default()
+          : elComponentData.props[key].default;
       }
 
       return props;

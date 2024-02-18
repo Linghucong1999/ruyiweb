@@ -43,10 +43,10 @@ const actions = {
     /**
      * 设置当前页面的uuid
      * @param state
-     * @param data
+     * @param uuid
      */
-    setActivePageUUID({ commit }, data) {
-        commit('setActivePageUUID', data);
+    setActivePageUUID({ commit }, uuid) {
+        commit('setActivePageUUID', uuid);
         //当前选中的页面切换后清空元素选中的uuid
         commit('setActiveElementUUID', '');
     },
@@ -72,7 +72,7 @@ const actions = {
      * @param commit
      * @param {*} data
      */
-    addElement({ commit,state }, eldata) {
+    addElement({ commit, state }, eldata) {
         const activePage = getters.activePage(state);
         const data = editorProjectConfig.getElementConfig(eldata, { zIndex: activePage.elements.length + 1 });
         commit('addElement', data);
@@ -84,11 +84,11 @@ const actions = {
     /**
      * 计入历史
      */
-    addHistoryCache({ commit}) {
+    addHistoryCache({ commit }) {
         commit('addHistoryCache');
     },
     /**
-     *撤销历史
+     *撤销
      */
     editorUndo({ commit, state }) {
         if (!getters.canUndo(state)) return;
@@ -139,7 +139,7 @@ const mutations = {
         }
         state.historyCache.push({
             projectData: cloneDeep(state.projectData),
-            activePageUUID: state.activePageUUID,
+            acticePageUUID: state.acticePageUUID,
             acticeElementUUID: state.acticeElementUUID,
         });
 
@@ -177,7 +177,7 @@ const mutations = {
      *往画板添加元素
      */
     addElement(state, eldata) {
-        const index = state.projectData.pages.findIndex(item =>{return item.uuid === state.acticePageUUID;});
+        const index = state.projectData.pages.findIndex(item => { return item.uuid === state.acticePageUUID; });
         state.projectData.pages[index].elements.push(eldata);
     }
 };
@@ -189,9 +189,9 @@ const getters = {
      */
     activePage() {
         if (!state.projectData.pages || !state.acticePageUUID) {
-            return {commonStyle:{},config:{}};
+            return { commonStyle: {}, config: {} };
         }
-        return state.projectData.pages.find(item=>{return item.uuid === state.acticePageUUID;});
+        return state.projectData.pages.find(item => { return item.uuid === state.acticePageUUID; });
     },
 
     /**
@@ -231,7 +231,7 @@ const getters = {
     },
 
     canRedo(state) {
-        return state.historyCache.length > state.currentHistoryIndex+1;
+        return state.historyCache.length > state.currentHistoryIndex + 1;
     }
 
 };

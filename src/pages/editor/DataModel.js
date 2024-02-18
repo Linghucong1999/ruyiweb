@@ -3,6 +3,7 @@ import { cloneDeep, merge } from 'lodash';
 import $config from '@/config/index';
 
 let elementConfig = {
+    // 组件
     elName: '', //组件名
     animations: [], //动画
     commonStyle: {
@@ -98,7 +99,7 @@ let getElementConfig = (element, extendStyle = {}) => {
     const config = {
         uuid: createUUID(),
         ...elementConfigData,
-        elName: elementData,
+        elName: elementData.elName,
         propsValue: deepClone(elementData.needProps || {}),
     };
 

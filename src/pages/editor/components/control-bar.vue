@@ -81,7 +81,6 @@ export default {
 .components-contrl-bar {
   display: inline-block;
   z-index: 3;
-  padding: 10px 0 10px;
   height: 30px;
 
   .button-item {

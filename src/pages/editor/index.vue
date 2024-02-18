@@ -72,7 +72,7 @@ export default {
         .getPageDetail({ pageId: this.id })
         .then((res) => {
           this.loading = false;
-          this.$store.dispatch("setProjectData", ...res.body);
+          this.$store.dispatch("setProjectData", res.body);
         })
         .catch(() => {
           this.loading = false;
