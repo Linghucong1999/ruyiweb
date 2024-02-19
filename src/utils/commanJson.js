@@ -233,3 +233,43 @@ export const elementConfig = [
         components: [],
     }
 ];
+
+export const menuOptions = [
+    {
+        title: '复制',
+        icon: 'iconfont iconfuzhi',
+        value: 'copy'
+    }, {
+        title: '删除',
+        icon: 'iconfont iconshanchu',
+        value: 'delete'
+    }, {
+        title: '字体放大',
+        icon: 'iconfont iconzitifangda',
+        value: 'fontA+',
+    }, {
+        title: '字体缩小',
+        icon: 'iconfont iconzitisuoxiao',
+        value: 'fontA-',
+    }, {
+        title: '字体加粗',
+        icon: 'iconfont iconzitijiacu',
+        value: 'fontB',
+    }, {
+        title: '图层上移',
+        icon: 'iconfont iconziyuan1',
+        value: 'layerUp',
+    }, {
+        title: '图层下移',
+        icon: 'iconfont iconxiayiyiceng',
+        value: 'layerDown',
+    }, {
+        title: '图层置顶',
+        icon: 'iconfont iconcontrol-top',
+        value: 'layerTop',
+    }, {
+        title: '图层置底',
+        icon: 'iconfont iconcontrol-bottom',
+        value: 'layerBottom'
+    }
+];

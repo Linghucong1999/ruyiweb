@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, merge } from "lodash";
 import editorProjectConfig from '@/pages/editor/DataModel';
 /**
  * 编辑数据状态存储
@@ -76,6 +76,9 @@ const actions = {
         commit('addHistoryCache');
     },
 
+
+    // 元素相关
+
     /**
      * 添加元素
      * @param commit
@@ -86,6 +89,67 @@ const actions = {
         const data = editorProjectConfig.getElementConfig(eldata, { zIndex: activePage.elements.length + 1 });
         commit('addElement', data);
         commit('setActiveElementUUID', data.uuid);
+        commit('addHistoryCache');
+    },
+
+    /**
+     * 元素指令，用于结束针对元素修改相关指令，再由此方法派发actions做具体修改
+     * @param {*} param0
+     * @param {*} command
+     */
+    elementCommand({ commit, dispatch }, command) {
+        let elData = getters.activeElement();
+        switch (command) {
+            case 'copy':
+                dispatch('copyElement', elData);
+                break;
+            case 'delete':
+                dispatch('deleteElement', elData.uuid);
+                break;
+            case 'fontA+':
+                dispatch('resetElementCommonStyle', { fontSize: elData.commonStyle.fontSize + 1 });
+                break;
+            case 'fontA-':
+                dispatch('resetElementCommonStyle', { fontSize: elData.commonStyle.fontSize - 1 });
+                break;
+            case 'fontB':
+                dispatch('resetElementCommonStyle', { fontWeight: elData.commonStyle.fontWeight === 'bold' ? 'normal' : 'bold' });
+                break;
+            case 'layerUp':
+                commit('resetElementZindex', { uuid: elData.uuid, type: 'layerUp' });
+                break;
+            case 'layerDown':
+                commit('resetElementZindex', { uuid: elData.uuid, type: 'layerDown' });
+                break;
+            case 'layerTop':
+                commit('resetElementZindex', { uuid: elData.uuid, type: 'layerTop' });
+                break;
+            case 'layerBottom':
+                commit('resetElementZindex', { uuid: elData.uuid, type: 'layerBottom' });
+                break;
+            default:
+                break;
+        }
+    },
+    copyElement({ commit }, elData) {
+        let copyOrignData = elData ? elData : getters.activeElement();
+        let activePage = getters.activePage();
+        let data = editorProjectConfig.copyElement(copyOrignData, { zIndex: activePage.elements.length + 1 });
+        commit('addElement', data);
+        commit('setActivePageUUID', data.uuid);
+        commit('addHistoryCache');
+    },
+    deleteElement({ state, commit }, uuid) {
+        // 删除选中元素的同时，取消选中元素事件
+        if (uuid === state.activeElementUUID) commit('setActiveElementUUID', '');
+
+        // 将页面元素的zIndex重置再删除
+        commit('resetElementZindex', { uuid: uuid, type: 'set0' });
+        commit('deleteElemet', uuid);
+        commit('addHistoryCache');
+    },
+    resetElementCommonStyle({ commit }, style) {
+        commit('resetElementCommonStyle', style);
         commit('addHistoryCache');
     },
 
@@ -188,6 +252,72 @@ const mutations = {
     addElement(state, eldata) {
         const index = state.projectData.pages.findIndex(item => { return item.uuid === state.activePageUUID; });
         state.projectData.pages[index].elements.push(eldata);
+    },
+
+    /**
+     * 改变元素的zIndex
+     * @param {*} state
+     * @param {*} param1 type:layerUp上一层,layerDown下一层,layerTop置顶,layerBottom置底
+     */
+    resetElementZindex(state, { uuid, type }) {
+        let eluuid = uuid || state.activeElementUUID;
+        // 获取当前激活页
+        let activePage = getters.activePage(state);
+        // 获取当前元素
+        let currentElement = activePage.elements.find(v => { return v.uuid === eluuid; });
+        // 获取当前元素的z-index
+        let itemZindex = currentElement.commonStyle.zIndex;
+        // 获取当前页面的元素个数
+        let maxIndex = activePage.elements.length;
+        // 获取最小z-index
+        let minIndex = 1;
+        // 定义z-index的移动方向
+        let zIndexDirc = {
+            layerUp: Math.min(itemZindex + 1, maxIndex),
+            layerDown: Math.max(itemZindex - 1, minIndex),
+            layerTop: maxIndex,
+            layerBottom: minIndex,
+            set0: 0,
+        };
+        // 如果z-index移动方向不存在，则返回
+        if (zIndexDirc[type] === undefined) return;
+        // 获取当前z-index
+        let currentZIndex = zIndexDirc[type];
+        // 设置当前元素的z-index
+        currentElement.commonStyle.zIndex = currentZIndex;
+        // 遍历当前页面的元素，如果当前元素不是当前元素，则根据z-index移动方向，改变其他元素的z-index
+        activePage.elements.forEach(item => {
+            if (eluuid === item.uuid) return;
+            if (type === 'layerUp' && item.commonStyle.zIndex === currentZIndex) {
+                item.commonStyle.zIndex--;
+            }
+            if (type === 'layerDown' && item.commonStyle.zIndex === currentZIndex) {
+                item.commonStyle.zIndex++;
+            }
+
+            if (type === 'layerTop' && item.commonStyle.zIndex > itemZindex) {
+                item.commonStyle.zIndex--;
+            }
+            if ((type === 'layerBottom' || type === 'set0') && item.commonStyle.zIndex < itemZindex) {
+                item.commonStyle.zIndex++;
+            }
+        });
+    },
+
+    deleteElemet(state, uuid) {
+        let activePage = getters.activePage(state);
+        let elementIndex = activePage.elements.findIndex(item => { return item.uuid === uuid; });
+        activePage.elements.splice(elementIndex, 1);
+    },
+
+    /**
+     * 重置元素样式
+     * @param {*} state
+     * @param {*} style
+     */
+    resetElementCommonStyle(state, style) {
+        let activeElement = getters.activeElement(state);
+        activeElement.commonStyle = merge(activeElement.commonStyle, style);
     }
 };
 

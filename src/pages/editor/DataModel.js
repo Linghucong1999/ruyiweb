@@ -129,6 +129,17 @@ let getCommonStyle = (styleObj, scalingRatio = 1) => {
     style.backgroundImage = style.backgroundImage ? `url(${style.backgroundImage})` : '';
     return style;
 };
+
+// 复制元素
+let copyElement = (element, extendStyle = {}) => {
+    let el = cloneDeep(element);
+    el.uuid = createUUID();
+    el.commonStyle = merge(element.commonStyle, extendStyle);
+    // 加上一点偏移量，以作区分
+    el.commonStyle.top = element.commonStyle.top + 10;
+    el.commonStyle.left = element.commonStyle.left + 10;
+    return el;
+};
 export default {
     elementConfig,
     pageConfig,
@@ -137,4 +148,5 @@ export default {
     getProjectConfig,
     getElementConfig,
     getCommonStyle,
+    copyElement,
 };

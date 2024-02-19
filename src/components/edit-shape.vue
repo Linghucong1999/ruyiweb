@@ -18,6 +18,7 @@
 </template>
 <script>
 // import runAnimation from "@/common/js/runAnimations";
+// import Bus from "@/event/bus";
 export default {
   props: {
     active: {
@@ -43,6 +44,22 @@ export default {
       },
     };
   },
+  // mounted() {
+  //   this.animatePlaying = false;
+  //   Bus.$on("RUN_ANIMATIONS", (uuid, animations) => {
+  //     if (uuid !== this.uuid) return;
+
+  //     // 正在执行的动画不允许插入新动画
+  //     if (this.animatePlaying) return;
+
+  //     let cssText = this.$el.style.cssText;
+  //     this.animatePlaying = true;
+  //     runAnimation(this.$el, animations, true, () => {
+  //       this.$el.style.cssText = cssText;
+  //       this.animatePlaying = false;
+  //     });
+  //   });
+  // },
   methods: {
     /**
      * 获取point计算后的样式

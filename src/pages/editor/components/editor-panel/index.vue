@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-pane" ref="editorPan" @click="handleClickCanvas">
+  <div class="editor-pane" ref="editorPane" @click="handleClickCanvas">
     <div class="editor-pane-inner">
       <div
         class="editor-main"
@@ -50,6 +50,27 @@
         </div>
         <div class="page-wrapper-mask"></div>
       </div>
+
+      <div
+        class="page-wrapper-menu-operation menu-item-on-edit-panel"
+        :style="getMenuOptionsPositionStyle"
+        :class="{ active: activeElementUUID }"
+      >
+        <el-tooltip
+          v-for="(item, index) in menuOptions"
+          :key="index"
+          :content="item.title"
+          effect="dark"
+          placement="right"
+        >
+          <div
+            class="menu-item menu-item-on-edit-panel"
+            @click="handleElementCommand(item.value)"
+          >
+            <i class="menu-item-on-edit-panel" :class="[item.icon]"></i>
+          </div>
+        </el-tooltip>
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +79,7 @@ import editShape from "@/components/edit-shape.vue";
 import { mapGetters, mapState } from "vuex";
 import { ruyi_register_components_object } from "@/plugins/index";
 import editorProjectConfig from "../../DataModel";
+import { menuOptions } from "@/utils/commanJson";
 export default {
   props: {
     scale: {
@@ -73,6 +95,7 @@ export default {
     return {
       editorPaneWidth: 0,
       getCommonStyle: editorProjectConfig.getCommonStyle,
+      menuOptions: menuOptions,
     };
   },
   computed: {
@@ -95,6 +118,9 @@ export default {
         right: right + "px",
       };
     },
+  },
+  mounted() {
+    this.editorPaneWidth = this.$refs.editorPane.offsetHight;
   },
   methods: {
     handleElementClick(uuid) {
@@ -134,6 +160,13 @@ export default {
      */
     handleKeyup(e) {
       console.log("触发esc事件", e);
+    },
+    /**
+     * 对元素执行命令
+     * @param {*} command
+     */
+    handleElementCommand(command) {
+      this.$store.dispatch("elementCommand", command);
     },
   },
 };
@@ -183,5 +216,34 @@ export default {
 .page-preview-wrapper {
   height: 100%;
   position: relative;
+}
+.element-on-edit-pane {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.page-wrapper-mask {
+  // height: 100%;
+  // width: 100%;
+  // position: absolute;
+  // z-index: 10001;
+  // left: 0;
+  // top: 0;
+  // pointer-events: none;
+  // outline: rgba(236, 238, 240, 0.77) solid 10000px;
+}
+
+.page-wrapper-menu-operation {
+  // position: absolute;
+  // right: 0;
+  // top: 45px;
+  // background-color: #dcdcdc;
+  // color: #333;
+  // text-align: center;
+  // border-radius: 4px;
+  // display: none;
+  // transition: all 0.3s ease-in-out;
+  // opacity: 0;
 }
 </style>
