@@ -126,7 +126,7 @@ export default {
       let up = () => {
         lastTime = new Date().getTime();
         if (lastTime - firstTime > 200) {
-          this.$emit("reszie");
+          this.$emit("resize");
         }
 
         document.removeEventListener("mousemove", move, true);
@@ -135,7 +135,13 @@ export default {
 
       document.addEventListener("mousemove", move, true);
       document.addEventListener("mouseup", up, true);
+      return true;
     },
+    /**
+     * 缩放事件
+     * @param {*} event
+     * @param {*} point
+     */
     handleMouseDownOnPoint(event, point) {
       // 抛出事件让父组件设置当前元素选中状态
       this.$emit("handleElementClick");
@@ -150,10 +156,10 @@ export default {
       let startX = event.clientX;
       let startY = event.clientY;
       let move = (moveEvent) => {
-        let currx = moveEvent.clientX;
-        let curry = moveEvent.clientY;
-        let disY = curry - startY;
-        let disX = currx - startX;
+        let currX = moveEvent.clientX;
+        let currY = moveEvent.clientY;
+        let disY = currY - startY;
+        let disX = currX - startX;
         let hasT = /t/.test(point),
           hasB = /b/.test(point),
           hasL = /l/.test(point),
@@ -164,7 +170,7 @@ export default {
         pos.width = newWidth > 0 ? newWidth : 0;
         pos.left = +left + (hasL ? disX : 0);
         pos.top = +top + (hasT ? disY : 0);
-        this.$emit("reszie", pos);
+        this.$emit("resize", pos);
       };
 
       let up = () => {

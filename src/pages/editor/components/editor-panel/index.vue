@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="editor-pane"
-    ref="editorPan"
-    @click="handleClickCanvas"
-  >
+  <div class="editor-pane" ref="editorPan" @click="handleClickCanvas">
     <div class="editor-pane-inner">
       <div
         class="editor-main"
@@ -39,7 +35,14 @@
           >
             <component
               :is="item.elName"
-              :style="getCommonStyle({ ...item.commonStyle, top: 0, left: 0 ,lineHeight:item.commonStyle.height})"
+              :style="
+                getCommonStyle({
+                  ...item.commonStyle,
+                  top: 0,
+                  left: 0,
+                  lineHeight: item.commonStyle.height,
+                })
+              "
               class="element-on-edit-pane"
               v-bind="item.propsValue"
             ></component>
