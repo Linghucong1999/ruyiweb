@@ -1,5 +1,9 @@
 <template>
-  <div class="editor-pane" ref="editorPan">
+  <div
+    class="editor-pane"
+    ref="editorPan"
+    @click="handleClickCanvas"
+  >
     <div class="editor-pane-inner">
       <div
         class="editor-main"
@@ -21,8 +25,24 @@
             :uuid="item.uuid"
             :active="item.uuid === activeElementUUID"
             :default-style="item.commonStyle"
+            :style="
+              getCommonStyle({
+                width: item.commonStyle.width,
+                height: item.commonStyle.height,
+                left: item.commonStyle.left,
+                top: item.commonStyle.top,
+                position: item.commonStyle.position,
+              })
+            "
+            @handleElementClick="handleElementClick(item.uuid)"
+            @resize="handleElementResize"
           >
-            <component :is="item.elName"></component>
+            <component
+              :is="item.elName"
+              :style="getCommonStyle({ ...item.commonStyle, top: 0, left: 0 ,lineHeight:item.commonStyle.height})"
+              class="element-on-edit-pane"
+              v-bind="item.propsValue"
+            ></component>
           </editShape>
         </div>
         <div class="page-wrapper-mask"></div>
@@ -71,6 +91,46 @@ export default {
       return {
         right: right + "px",
       };
+    },
+  },
+  methods: {
+    handleElementClick(uuid) {
+      // 元素被点击
+      this.$store.dispatch("setActiveElementUUID", uuid);
+    },
+    /**
+     * 移动改变元素大小定位
+     * @param {*} pos 当pos有值表示移动需要实时同步样式变化,pos为undefind时表示移动结束,记录一次历史记录
+     * 鼠标移动完成时才记入历史记录
+     */
+    handleElementResize(pos) {
+      if (!pos) {
+        this.$store.dispatch("addHistoryCache");
+        return;
+      }
+
+      this.projectData.pages[this.currentPageIndex].elements[
+        this.activeElementIndex
+      ].commonStyle.left = pos.left;
+
+      this.projectData.pages[this.currentPageIndex].elements[
+        this.activeElementIndex
+      ].commonStyle = { ...pos };
+    },
+    handleClickCanvas(e) {
+      if (
+        !e.target.classList.contains("element-on-edit-pane") &&
+        !e.target.classList.contains("menu-item-on-edit-panel")
+      ) {
+        this.$store.dispatch("setActiveElementUUID", "");
+      }
+    },
+    /**
+     * 监听键盘esc事件
+     * @param e
+     */
+    handleKeyup(e) {
+      console.log("触发esc事件", e);
     },
   },
 };

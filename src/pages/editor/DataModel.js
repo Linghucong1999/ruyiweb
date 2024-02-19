@@ -29,7 +29,6 @@ let elementConfig = {
         boxShadow: '',
         fontSize: 16,
         fontWidth: 500,
-        lineHeight: 1.5,
         letterSpacing: 0,
         textAlign: 'center',
         color: '#000000',

@@ -11,6 +11,7 @@
       v-for="(item, index) in active ? pointList : []"
       :key="index"
       :style="getPointStyle(item)"
+      @mousedown="handleMouseDownOnPoint($event, item)"
     ></div>
     <slot></slot>
   </div>
@@ -70,7 +71,7 @@ export default {
         // 左右点，高度固定在中间
         if (hasL || hasR) {
           newLeft = hasL ? 0 : width;
-          newTop = hasT / 2;
+          newTop = height / 2;
         }
       }
 
@@ -114,10 +115,86 @@ export default {
         // 移动的时候,不需要向后代元素传递事件,只需要单纯的移动就行
         moveEvent.stopPropagation();
         moveEvent.preventDefault();
+
+        let currX = moveEvent.clientX;
+        let currY = moveEvent.clientY;
+        pos.top = currY - startY + startTop;
+        pos.left = currX - startX + startLeft;
+        this.$emit("resize", pos);
       };
+
+      let up = () => {
+        lastTime = new Date().getTime();
+        if (lastTime - firstTime > 200) {
+          this.$emit("reszie");
+        }
+
+        document.removeEventListener("mousemove", move, true);
+        document.removeEventListener("mouseup", up, true);
+      };
+
+      document.addEventListener("mousemove", move, true);
+      document.addEventListener("mouseup", up, true);
+    },
+    handleMouseDownOnPoint(event, point) {
+      // 抛出事件让父组件设置当前元素选中状态
+      this.$emit("handleElementClick");
+      event.stopPropagation();
+      event.preventDefault();
+
+      const pos = { ...this.defaultStyle };
+      let height = pos.height;
+      let width = pos.width;
+      let top = pos.top;
+      let left = pos.left;
+      let startX = event.clientX;
+      let startY = event.clientY;
+      let move = (moveEvent) => {
+        let currx = moveEvent.clientX;
+        let curry = moveEvent.clientY;
+        let disY = curry - startY;
+        let disX = currx - startX;
+        let hasT = /t/.test(point),
+          hasB = /b/.test(point),
+          hasL = /l/.test(point),
+          hasR = /r/.test(point);
+        let newHeight = +height + (hasT ? -disY : hasB ? disY : 0);
+        let newWidth = +width + (hasL ? -disX : hasR ? disX : 0);
+        pos.height = newHeight > 0 ? newHeight : 0;
+        pos.width = newWidth > 0 ? newWidth : 0;
+        pos.left = +left + (hasL ? disX : 0);
+        pos.top = +top + (hasT ? disY : 0);
+        this.$emit("reszie", pos);
+      };
+
+      let up = () => {
+        this.$emit("resize");
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
+      };
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", up);
     },
   },
 };
 </script>
 <style lang="less" scoped>
+.commonents-edit-shape {
+  cursor: move;
+  &.active {
+    outline: 1px solid #67c23a;
+  }
+  &:hover {
+    outline: 1px solid #67c23a;
+  }
+}
+
+.edit-shape-point {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border: 1px solid #67c23a;
+  border-radius: 10px;
+  position: absolute;
+}
 </style>

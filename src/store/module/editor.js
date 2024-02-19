@@ -8,9 +8,9 @@ const state = {
     projectData: {},
 
     //当前正在编辑的页面uuid
-    acticePageUUID: '',
+    activePageUUID: '',
     //画板中选中的元素UUID
-    acticeElementUUID: '',
+    activeElementUUID: '',
     //历史操作数据用于undo redo
     historyCache: [],
     //undo redo指针
@@ -49,6 +49,15 @@ const actions = {
         commit('setActivePageUUID', uuid);
         //当前选中的页面切换后清空元素选中的uuid
         commit('setActiveElementUUID', '');
+    },
+
+    /**
+     * 被激活的元素
+     * @param state
+     * @param uuid
+     */
+    setActiveElementUUID({ commit }, uuid) {
+        commit('setActiveElementUUID', uuid);
     },
 
     /**
@@ -121,10 +130,10 @@ const mutations = {
         }
     },
     setActivePageUUID(state, uuid) {
-        state.acticePageUUID = uuid;
+        state.activePageUUID = uuid;
     },
     setActiveElementUUID(state, uuid) {
-        state.acticeElementUUID = uuid;
+        state.activeElementUUID = uuid;
     },
 
     //历史记录
@@ -139,8 +148,8 @@ const mutations = {
         }
         state.historyCache.push({
             projectData: cloneDeep(state.projectData),
-            acticePageUUID: state.acticePageUUID,
-            acticeElementUUID: state.acticeElementUUID,
+            activePageUUID: state.activePageUUID,
+            activeElementUUID: state.activeElementUUID,
         });
 
         //限制uudo步数，记录步数
@@ -153,8 +162,8 @@ const mutations = {
      */
     relapceEditorState(state, data) {
         state.projectData = cloneDeep(data.projectData);
-        state.acticePageUUID = data.acticePageUUID;
-        state.acticeElementUUID = data.acticeElementUUID;
+        state.activePageUUID = data.activePageUUID;
+        state.activeElementUUID = data.activeElementUUID;
     },
 
     /**
@@ -177,7 +186,7 @@ const mutations = {
      *往画板添加元素
      */
     addElement(state, eldata) {
-        const index = state.projectData.pages.findIndex(item => { return item.uuid === state.acticePageUUID; });
+        const index = state.projectData.pages.findIndex(item => { return item.uuid === state.activePageUUID; });
         state.projectData.pages[index].elements.push(eldata);
     }
 };
@@ -188,10 +197,10 @@ const getters = {
      * 当前选中页面
      */
     activePage() {
-        if (!state.projectData.pages || !state.acticePageUUID) {
+        if (!state.projectData.pages || !state.activePageUUID) {
             return { commonStyle: {}, config: {} };
         }
-        return state.projectData.pages.find(item => { return item.uuid === state.acticePageUUID; });
+        return state.projectData.pages.find(item => { return item.uuid === state.activePageUUID; });
     },
 
     /**
@@ -202,7 +211,7 @@ const getters = {
             // 如果不存在页面就返回-1
             return -1;
         }
-        return state.projectData.pages.findIndex(item => { return item.uuid === state.acticePageUUID; });
+        return state.projectData.pages.findIndex(item => { return item.uuid === state.activePageUUID; });
     },
     /**
      * 选中的页面元素索引
@@ -211,9 +220,9 @@ const getters = {
      */
     activeElementIndex(state) {
         if (!state.projectData.pages) return -1;
-        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.acticePageUUID);
+        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.activePageUUID);
         if (currentPageIndex === -1) return -1;
-        return state.projectData.pages[currentPageIndex].elements.findIndex(item => item.uuid === state.acticeElementUUID);
+        return state.projectData.pages[currentPageIndex].elements.findIndex(item => item.uuid === state.activeElementUUID);
     },
 
     /**
@@ -221,9 +230,9 @@ const getters = {
      */
     activeElement() {
         if (!state.projectData.pages) return -1;
-        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.acticePageUUID);
+        let currentPageIndex = state.projectData.pages.findIndex(item => item.uuid === state.activePageUUID);
         if (currentPageIndex === -1) return -1;
-        return state.projectData.pages[currentPageIndex].elements.find(item => item.uuid === state.acticeElementUUID);
+        return state.projectData.pages[currentPageIndex].elements.find(item => item.uuid === state.activeElementUUID);
     },
 
     canUndo(state) {
