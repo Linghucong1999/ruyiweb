@@ -97,6 +97,10 @@ export default {
   .editor-side-bar {
     width: 55px;
   }
+  .editor-main {
+    flex: 1;
+    position: relative;
+  }
 }
 
 .editor-page-edit-wrapper {

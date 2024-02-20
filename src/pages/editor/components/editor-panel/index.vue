@@ -124,7 +124,7 @@ export default {
     },
   },
   mounted() {
-    this.editorPaneWidth = this.$refs.editorPane.offsetHight;
+    this.editorPaneWidth = this.$refs.editorPane.offsetHeight;
   },
   methods: {
     handleElementClick(uuid) {
@@ -230,13 +230,16 @@ export default {
 .page-wrapper-mask {
   height: 100%;
   width: 100%;
+  // position: absolute;
+  // left: 0;
+  // top: 0;
 }
 
 .page-wrapper-menu-operation {
   position: absolute;
   right: 0;
   top: 45px;
-  // width: 0;
+  width: 0;
   background-color: #dcdcdc;
   text-align: center;
   border-radius: 4px;
