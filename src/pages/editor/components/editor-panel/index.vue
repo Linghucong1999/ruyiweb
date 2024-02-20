@@ -67,7 +67,11 @@
             class="menu-item menu-item-on-edit-panel"
             @click="handleElementCommand(item.value)"
           >
-            <i class="menu-item-on-edit-panel" :class="[item.icon]"></i>
+            <i
+              class="menu-item-on-edit-panel"
+              :class="[item.icon]"
+              style="color: #67c23a"
+            ></i>
           </div>
         </el-tooltip>
       </div>
@@ -224,26 +228,42 @@ export default {
 }
 
 .page-wrapper-mask {
-  // height: 100%;
-  // width: 100%;
-  // position: absolute;
-  // z-index: 10001;
-  // left: 0;
-  // top: 0;
-  // pointer-events: none;
-  // outline: rgba(236, 238, 240, 0.77) solid 10000px;
+  height: 100%;
+  width: 100%;
 }
 
 .page-wrapper-menu-operation {
-  // position: absolute;
-  // right: 0;
-  // top: 45px;
-  // background-color: #dcdcdc;
-  // color: #333;
-  // text-align: center;
-  // border-radius: 4px;
-  // display: none;
-  // transition: all 0.3s ease-in-out;
-  // opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  // width: 0;
+  background-color: #dcdcdc;
+  text-align: center;
+  border-radius: 4px;
+  display: none;
+  transition: all 0.3s ease-in-out;
+  z-index: 10002;
+  opacity: 0;
+  .menu-item {
+    padding: 10px;
+    cursor: pointer;
+    &.i {
+      font-size: 24px;
+      line-height: 30px;
+    }
+
+    &:hover {
+      background-color: rgba(37, 165, 137, 0.09);
+      &.i {
+        font-weight: bold;
+        font-size: 26px;
+      }
+    }
+  }
+  &.active {
+    display: block;
+    width: 60px;
+    opacity: 1;
+  }
 }
 </style>

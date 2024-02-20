@@ -2,15 +2,21 @@
   <div class="page-editor editor-wrapper" v-loading="loading">
     <!-- 左侧导航栏 -->
     <div class="editor-side-bar">
-      <el-tabs tab-position="left" v-model="activeSideBar">
+      <el-tabs tab-position="left" v-model="activeSideBar" style="height: 100%">
         <el-tab-pane
           v-for="(item, index) in sideBarMenus"
           :key="index"
           :name="item.value"
         >
-          <div slot="label">
-            <i :class="item.elementUiIcon"></i>{{ item.label }}
-          </div>
+          <el-tooltip
+            slot="label"
+            class="item"
+            effect="dark"
+            :content="item.label"
+            placement="right"
+          >
+            <i :class="item.elementUiIcon"></i>
+          </el-tooltip>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -89,24 +95,33 @@ export default {
   margin-top: 20px;
 
   .editor-side-bar {
-    font-size: 14px;
+    width: 55px;
   }
 }
 
-::v-deep .el-tabs__item:hover {
-  background-color: #ecf5ff;
+.editor-page-edit-wrapper {
+  width: 210px;
+  padding: 0 1px;
 }
 
-::v-deep.el-tabs--left .el-tabs__active-bar.is-left {
-  right: revert-layer;
-  left: 0;
+.control-bar-wrapper {
+  margin-bottom: 10px;
 }
 
-::v-deep .el-tabs__active-bar {
-  background-color: #fff;
-}
+// ::v-deep .el-tabs__item:hover {
+//   background-color: #ecf5ff;
+// }
 
-::v-deep .el-tabs--left .el-tabs__nav-wrap.is-left::after {
-  width: 0;
-}
+// ::v-deep.el-tabs--left .el-tabs__active-bar.is-left {
+//   right: revert-layer;
+//   left: 0;
+// }
+
+// ::v-deep .el-tabs__active-bar {
+//   background-color: #fff;
+// }
+
+// ::v-deep .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+//   width: 0;
+// }
 </style>

@@ -3,12 +3,14 @@
  */
 
 import Text from './text';
+import Image from './image';
 
 /**
  * 所有组件列表
  */
 const components = [
     Text,
+    Image,
 ];
 
 // 定义install方法
@@ -17,7 +19,7 @@ const install = function (Vue) {
     if (install.installed) return;
     install.installed = true;
     // 遍历注册的组件
-    components.map(component=>Vue.component(component.name,component));
+    components.map(component => Vue.component(component.name, component));
 };
 
 // 检测到Vue才执行
@@ -32,6 +34,7 @@ components.forEach(item => {
 
 export {
     Text,
+    Image,
     ruyi_register_components_object,
 };
 

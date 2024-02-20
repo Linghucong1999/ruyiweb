@@ -76,7 +76,6 @@ const actions = {
         commit('addHistoryCache');
     },
 
-
     // 元素相关
 
     /**
@@ -136,7 +135,7 @@ const actions = {
         let activePage = getters.activePage();
         let data = editorProjectConfig.copyElement(copyOrignData, { zIndex: activePage.elements.length + 1 });
         commit('addElement', data);
-        commit('setActivePageUUID', data.uuid);
+        commit('setActiveElementUUID', data.uuid);
         commit('addHistoryCache');
     },
     deleteElement({ state, commit }, uuid) {

@@ -19,9 +19,17 @@ export default {
 <style lang="less" scoped>
 .page-layout {
   height: 100%;
+  padding-top: 48px;
 }
 .sub-page {
   position: relative;
   height: 100%;
+}
+.page-header-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
 </style>

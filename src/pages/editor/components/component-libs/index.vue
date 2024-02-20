@@ -7,7 +7,10 @@
           <div class="components-libs-title">
             <el-tag type="success">{{ item.title }}</el-tag>
           </div>
-          <div v-if="item.components && item.components.length">
+          <div
+            v-if="item.components && item.components.length"
+            class="components-lib-Lists"
+          >
             <div
               class="components-libs-item"
               v-for="(element, rowindex) in item.components"
@@ -78,8 +81,13 @@ export default {
 <style lang="less" scoped>
 .components-libs-title {
   margin-bottom: 10px;
+  text-align: center;
 }
-
+.components-lib-Lists {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .components-libs-item {
   color: #949292;
   text-align: center;
@@ -119,5 +127,14 @@ export default {
 
 .components-libs-wrapper {
   user-select: none;
+  height: 100%;
+  & ul {
+    padding: 10px;
+  }
+
+  .page-title {
+    text-align: center;
+    width: 100%;
+  }
 }
 </style>

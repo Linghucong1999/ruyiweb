@@ -28,7 +28,7 @@ let elementConfig = {
         borderRadius: 0,
         boxShadow: '',
         fontSize: 16,
-        fontWidth: 500,
+        fontWeight: 500,
         letterSpacing: 0,
         textAlign: 'center',
         color: '#000000',
@@ -134,10 +134,10 @@ let getCommonStyle = (styleObj, scalingRatio = 1) => {
 let copyElement = (element, extendStyle = {}) => {
     let el = cloneDeep(element);
     el.uuid = createUUID();
-    el.commonStyle = merge(element.commonStyle, extendStyle);
+    el.commonStyle = merge(el.commonStyle, extendStyle);
     // 加上一点偏移量，以作区分
-    el.commonStyle.top = element.commonStyle.top + 10;
-    el.commonStyle.left = element.commonStyle.left + 10;
+    el.commonStyle.top = el.commonStyle.top + 30;
+    // el.commonStyle.left = element.commonStyle.left + 10;
     return el;
 };
 export default {
