@@ -8,6 +8,7 @@ import Button from './button';
 import Rectangle from './rectangle';
 import Divider from './divider';
 import Iframe from './iframe';
+import CheckBox from './checkBox';
 
 /**
  * 所有组件列表
@@ -19,6 +20,7 @@ const components = [
     Rectangle,
     Divider,
     Iframe,
+    CheckBox,
 ];
 
 // 定义install方法
@@ -47,6 +49,7 @@ export {
     Rectangle,
     Divider,
     Iframe,
+    CheckBox,
     ruyi_register_components_object,
 };
 
