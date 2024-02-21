@@ -3,10 +3,7 @@
     <p class="page-title text-center">组件库</p>
     <el-scrollbar style="height: 100%">
       <ul class="scrollbar-wrapper">
-        <li
-          v-for="(item, index) in componentsList"
-          :key="index"
-        >
+        <li v-for="(item, index) in componentsList" :key="index">
           <div class="components-libs-title">
             <el-tag type="success">{{ item.title }}</el-tag>
           </div>

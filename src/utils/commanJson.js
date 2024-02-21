@@ -123,7 +123,7 @@ export const elementConfig = [
             {
                 elName: 'ruyi-divider',
                 title: '分割线',
-                icon: 'iconfont icon758bianjiqi_fengexian',
+                icon: 'iconfont iconfengexian',
                 valueType: '',
                 defaultStyle: {
                     color: '#fafafa',
@@ -180,7 +180,7 @@ export const elementConfig = [
         title: '表单组件',
         components: [
             {
-                elName: 'el-input',
+                elName: 'input',
                 title: '单行文本',
                 icon: 'iconfont iconwenbenkuang',
             },
@@ -208,6 +208,11 @@ export const elementConfig = [
                 elName: 'datetime',
                 title: '日期时间选择器',
                 icon: 'iconfont iconriqishijian',
+            },
+            {
+                elName: 'ruyi-number-input',
+                title: '数字输入框',
+                icon: 'iconfont iconmubiaoyemianliebiao'
             }
         ]
     },
