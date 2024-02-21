@@ -212,7 +212,7 @@ export const elementConfig = [
             {
                 elName: 'ruyi-number-input',
                 title: '数字输入框',
-                icon: 'iconfont iconfuhao-shuzishurukuangel-icon-medal-1'
+                icon: 'iconfont iconfuhao-shuzishurukuang'
             }
         ]
     },
