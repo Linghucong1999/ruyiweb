@@ -40,7 +40,6 @@
                   ...item.commonStyle,
                   top: 0,
                   left: 0,
-                  lineHeight: item.commonStyle.height,
                 })
               "
               class="element-on-edit-pane"

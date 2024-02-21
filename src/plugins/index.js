@@ -4,6 +4,10 @@
 
 import Text from './text';
 import Image from './image';
+import Button from './button';
+import Rectangle from './rectangle';
+import Divider from './divider';
+import Iframe from './iframe';
 
 /**
  * 所有组件列表
@@ -11,6 +15,10 @@ import Image from './image';
 const components = [
     Text,
     Image,
+    Button,
+    Rectangle,
+    Divider,
+    Iframe,
 ];
 
 // 定义install方法
@@ -35,6 +43,10 @@ components.forEach(item => {
 export {
     Text,
     Image,
+    Button,
+    Rectangle,
+    Divider,
+    Iframe,
     ruyi_register_components_object,
 };
 

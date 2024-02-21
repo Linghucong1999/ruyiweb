@@ -80,6 +80,7 @@ export const elementConfig = [
                 valueType: '',   // 标识数据类型，用于表单组件
                 defaultStyle: {
                     height: 40,
+                    lineHeight: 40,
                 }
             },
             {
@@ -99,16 +100,15 @@ export const elementConfig = [
                 defaultStyle: {
                     width: 140,
                     height: 40,
-                    paddingTop: 10,
-                    paddingBottom: 10,
                     borderColor: '#1890FF',
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderRadius: 4,
+                    lineHeight: 40,
                 },
             },
             {
-                elName: 'ruyi-rectangle-border',
+                elName: 'ruyi-rectangle',
                 title: '矩形边框',
                 icon: 'iconfont iconjuxing',
                 valueType: '',
@@ -117,18 +117,16 @@ export const elementConfig = [
                     height: 100,
                     borderColor: '#1890FF',
                     borderStyle: 'solid',
-                    borderWidth: 2,
+                    borderWidth: 1,
                 }
             },
             {
-                elName: 'ruyi-rectangle-border',
+                elName: 'ruyi-divider',
                 title: '分割线',
                 icon: 'iconfont icon758bianjiqi_fengexian',
                 valueType: '',
                 defaultStyle: {
-                    height: 1,
-                    borderColor: '#1890FF',
-                    width: 300,
+                    color: '#fafafa',
                 }
             },
             {
@@ -182,22 +180,22 @@ export const elementConfig = [
         title: '表单组件',
         components: [
             {
-                elName: 'input',
+                elName: 'el-input',
                 title: '单行文本',
                 icon: 'iconfont iconwenbenkuang',
             },
             {
-                elName: 'radio',
+                elName: 'el-radio',
                 title: '单选框',
                 icon: 'iconfont iconplus-radio',
             },
             {
-                elName: 'checkbox',
+                elName: 'ruyi-checkbox',
                 title: '复选框',
                 icon: 'iconfont iconduoxuan',
             },
             {
-                elName: 'date',
+                elName: 'el-date',
                 title: '日期选择器',
                 icon: 'iconfont iconriqi',
             },
