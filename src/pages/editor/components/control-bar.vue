@@ -87,6 +87,7 @@ export default {
     display: inline-block;
     width: 68px;
     cursor: pointer;
+    font-size: 14px;
     text-align: center;
     vertical-align: bottom;
     transition: color 0.28s transform 0.28s;

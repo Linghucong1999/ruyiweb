@@ -38,6 +38,10 @@
         <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
       </div>
     </div>
+
+    <div class="el-attr-edit-wrapper scrollbar-wrapper">
+      零一边框
+    </div>
   </div>
 </template>
 <script>
@@ -109,7 +113,11 @@ export default {
 }
 
 .control-bar-wrapper {
-  margin-bottom: 10px;
+  position: absolute;
+  top: -55px;
+  left: 0;
+  width: 100%;
+  text-align: center;
 }
 
 // ::v-deep .el-tabs__item:hover {

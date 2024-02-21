@@ -206,6 +206,15 @@ export default {
   width: 100%;
   overflow: auto;
   padding: 20px;
+
+  .page-wrapper-mask {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+  }
 }
 
 .editor-main {
@@ -227,18 +236,10 @@ export default {
   overflow: hidden;
 }
 
-.page-wrapper-mask {
-  height: 100%;
-  width: 100%;
-  // position: absolute;
-  // left: 0;
-  // top: 0;
-}
-
 .page-wrapper-menu-operation {
   position: absolute;
   right: 0;
-  top: 45px;
+  top: 0;
   width: 0;
   background-color: #dcdcdc;
   text-align: center;
