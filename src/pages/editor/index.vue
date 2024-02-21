@@ -1,7 +1,7 @@
 <template>
   <div class="page-editor editor-wrapper" v-loading="loading">
     <!-- 左侧导航栏 -->
-    <div class="editor-side-bar">
+    <div class="editor-side-bar border-R">
       <el-tabs tab-position="left" v-model="activeSideBar" style="height: 100%">
         <el-tab-pane
           v-for="(item, index) in sideBarMenus"
@@ -34,14 +34,10 @@
           v-if="activeSideBar === 'componentLibs'"
         ></cantrol-bar>
       </div>
-      <div>
-        <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
-      </div>
+      <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
     </div>
 
-    <div class="el-attr-edit-wrapper scrollbar-wrapper">
-      零一边框
-    </div>
+    <div class="el-attr-edit-wrapper scrollbar-wrapper">零一边框</div>
   </div>
 </template>
 <script>
@@ -118,6 +114,12 @@ export default {
   left: 0;
   width: 100%;
   text-align: center;
+  z-index: 1000;
+}
+
+.el-attr-edit-wrapper {
+  width: 380px;
+  padding: 0;
 }
 
 // ::v-deep .el-tabs__item:hover {

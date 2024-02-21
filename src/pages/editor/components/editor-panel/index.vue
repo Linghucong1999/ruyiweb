@@ -239,14 +239,14 @@ export default {
 .page-wrapper-menu-operation {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 45px;
   width: 0;
   background-color: #dcdcdc;
   text-align: center;
   border-radius: 4px;
   display: none;
   transition: all 0.3s ease-in-out;
-  z-index: 10002;
+  z-index: 1002;
   opacity: 0;
   .menu-item {
     padding: 10px;
