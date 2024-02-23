@@ -1,8 +1,6 @@
 <template>
   <div class="ruyi-checkbox">
-    <el-checkbox v-model="checked">{{
-      label
-    }}</el-checkbox>
+    <el-checkbox v-model="checked" :label="label" checked></el-checkbox>
   </div>
 </template>
 <script>

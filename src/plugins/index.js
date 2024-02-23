@@ -9,6 +9,7 @@ import Rectangle from './rectangle';
 import Divider from './divider';
 import Iframe from './iframe';
 import CheckBox from './checkBox';
+import TimeSelect from './time-select';
 
 /**
  * 所有组件列表
@@ -21,6 +22,7 @@ const components = [
     Divider,
     Iframe,
     CheckBox,
+    TimeSelect,
 ];
 
 // 定义install方法
@@ -50,6 +52,7 @@ export {
     Divider,
     Iframe,
     CheckBox,
+    TimeSelect,
     ruyi_register_components_object,
 };
 

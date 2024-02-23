@@ -183,26 +183,33 @@ export const elementConfig = [
                 elName: 'input',
                 title: '单行文本',
                 icon: 'iconfont iconwenbenkuang',
+                defaultStyle: {
+                    border: '1px solid #ccc',
+                },
+                valueType: '',
             },
-            {
-                elName: 'el-radio',
-                title: '单选框',
-                icon: 'iconfont iconplus-radio',
-            },
-            {
-                elName: 'ruyi-checkbox',
-                title: '复选框',
-                icon: 'iconfont iconduoxuan',
-            },
+            // {
+            //     elName: 'el-radio',
+            //     title: '单选框',
+            //     icon: 'iconfont iconplus-radio',
+            // },
+            // {
+            //     elName: 'ruyi-checkbox',
+            //     title: '复选框',
+            //     icon: 'iconfont iconduoxuan',
+            // },
             {
                 elName: 'el-date',
                 title: '日期选择器',
                 icon: 'iconfont iconriqi',
             },
             {
-                elName: 'time',
+                elName: 'ruyi-time-select',
                 title: '时间选择器',
                 icon: 'iconfont iconshijian',
+                defaultStyle: {
+                    height: 60,
+                }
             },
             {
                 elName: 'datetime',
