@@ -115,7 +115,7 @@ export default {
     ]),
     getMenuOptionsPositionStyle() {
       let both =
-        (this.editorPaneWidth - this.projectData.width * this.scale) / 4;
+        (this.editorPaneWidth - this.projectData.width * this.scale) / 6;
       let right = both < 60 ? 16 : both;
       return {
         right: right + "px",

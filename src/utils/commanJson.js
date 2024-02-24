@@ -225,7 +225,18 @@ export const elementConfig = [
             {
                 elName: 'ruyi-number-input',
                 title: '数字输入框',
-                icon: 'iconfont iconfuhao-shuzishurukuang'
+                icon: 'iconfont iconfuhao-shuzishurukuang',
+                defaultStyle: {
+                    height: 60,
+                }
+            },
+            {
+                elName: 'ruyi-textarea',
+                title: '文本域',
+                icon: 'iconfont iconwenben',
+                defaultStyle: {
+                    height: 120,
+                }
             }
         ]
     },

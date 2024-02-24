@@ -11,6 +11,7 @@ import Iframe from './iframe';
 import CheckBox from './checkBox';
 import TimeSelect from './time-select';
 import DateTimeSelect from './date-time-select';
+import NumberInput from './number-input';
 
 /**
  * 所有组件列表
@@ -25,6 +26,7 @@ const components = [
     CheckBox,
     TimeSelect,
     DateTimeSelect,
+    NumberInput,
 ];
 
 // 定义install方法
@@ -56,6 +58,7 @@ export {
     CheckBox,
     TimeSelect,
     DateTimeSelect,
+    NumberInput,
     ruyi_register_components_object,
 };
 
