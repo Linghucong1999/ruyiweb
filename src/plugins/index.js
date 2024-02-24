@@ -10,6 +10,7 @@ import Divider from './divider';
 import Iframe from './iframe';
 import CheckBox from './checkBox';
 import TimeSelect from './time-select';
+import DateTimeSelect from './date-time-select';
 
 /**
  * 所有组件列表
@@ -23,6 +24,7 @@ const components = [
     Iframe,
     CheckBox,
     TimeSelect,
+    DateTimeSelect,
 ];
 
 // 定义install方法
@@ -53,6 +55,7 @@ export {
     Iframe,
     CheckBox,
     TimeSelect,
+    DateTimeSelect,
     ruyi_register_components_object,
 };
 

@@ -199,9 +199,12 @@ export const elementConfig = [
             //     icon: 'iconfont iconduoxuan',
             // },
             {
-                elName: 'el-date',
+                elName: 'ruyi-date-picker',
                 title: '日期选择器',
                 icon: 'iconfont iconriqi',
+                defaultStyle: {
+                    height: 60,
+                }
             },
             {
                 elName: 'ruyi-time-select',
@@ -212,9 +215,12 @@ export const elementConfig = [
                 }
             },
             {
-                elName: 'datetime',
+                elName: 'ruyi-date-time-select',
                 title: '日期时间选择器',
                 icon: 'iconfont iconriqishijian',
+                defaultStyle: {
+                    height: 60,
+                }
             },
             {
                 elName: 'ruyi-number-input',
