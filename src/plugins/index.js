@@ -12,6 +12,7 @@ import CheckBox from './checkBox';
 import TimeSelect from './time-select';
 import DateTimeSelect from './date-time-select';
 import NumberInput from './number-input';
+import Textarea from './textarea';
 
 /**
  * 所有组件列表
@@ -26,6 +27,7 @@ const components = [
     CheckBox,
     TimeSelect,
     DateTimeSelect,
+    Textarea,
     NumberInput,
 ];
 
@@ -59,6 +61,7 @@ export {
     TimeSelect,
     DateTimeSelect,
     NumberInput,
+    Textarea,
     ruyi_register_components_object,
 };
 
