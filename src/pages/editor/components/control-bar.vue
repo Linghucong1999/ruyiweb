@@ -30,16 +30,30 @@
       <i class="iconfont iconredo1"></i>
       <p>重做</p>
     </div>
+    <UploadPsd @upload-success="uploadSuccessPsd">
+      <div class="button-item">
+        <i class="iconfont iconps"></i>
+        <p>导入PSD</p>
+      </div>
+    </UploadPsd>
+    <div class="button-item" @click="showPreview">
+      <i class="iconfont iconyulan"></i>
+      <p>预览保存</p>
+    </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import UploadPsd from "@/components/upload-psd.vue";
 export default {
   props: {
     scale: {
       type: Number,
       default: 1,
     },
+  },
+  components: {
+    UploadPsd,
   },
   data() {
     return {
@@ -73,6 +87,19 @@ export default {
       }
       //告诉父组件更新scale值
       this.$emit("update:scale", this.scaleValue);
+    },
+    /**
+     * 获取解析后的psd文件数据
+     * @param {*} dataList
+     */
+    uploadSuccessPsd(dataList) {
+      this.$emit("import-psd-data", dataList);
+    },
+    /**
+     * 显示预览
+     */
+    showPreview() {
+      this.$emit("showPreview");
     },
   },
 };

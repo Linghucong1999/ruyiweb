@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 axios.defaults.headers['Content-Type'] = 'applicathion/json;charset=utf-8';
-axios.defaults.timeout = 30000;
+axios.defaults.timeout = 70000;
 
 //请求拦截器
 axios.interceptors.request.use(config => {
@@ -124,6 +124,17 @@ export default {
             headers: {
                 ...(header || {}),
                 'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            }
+        });
+    },
+    postFile(url, param, header) {
+        return axios({
+            method: 'post',
+            url,
+            data: param,
+            headers: {
+                ...(header || {}),
+                'Content-type': 'multipart/form-data',
             }
         });
     },

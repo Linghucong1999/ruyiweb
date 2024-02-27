@@ -31,7 +31,8 @@
       <div class="control-bar-wrapper">
         <cantrol-bar
           :scale.sync="canvasConfig.scale"
-          v-if="activeSideBar === 'componentLibs'"
+          @import-psd-data="importPsdData"
+          @showPreview="showPreview"
         ></cantrol-bar>
       </div>
       <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
@@ -41,6 +42,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import { sideBarMenus } from "@/utils/commanJson";
 import ComponentLibs from "./components/component-libs/index.vue";
 import CantrolBar from "./components/control-bar.vue";
@@ -61,6 +63,13 @@ export default {
         scale: 1,
       },
     };
+  },
+  computed: {
+    ...mapState({
+      projectData: (state) => state.pageEditor.projectData,
+      activePageUUID: (state) => state.pageEditor.activePageUUID,
+      activeElementUUID: (state) => state.pageEditor.activeElementUUID,
+    }),
   },
   created() {
     this.id = this.$route.query.id;
@@ -84,6 +93,36 @@ export default {
           this.loading = false;
         });
     },
+    /**
+     * 导入的psd文件数据
+     * @param {*} psdData
+     */
+    importPsdData(psdData) {
+      const elementsList = psdData.elements;
+      const psdWidth = psdData.document.document.width;
+      const scalingRatio = this.projectData.width / psdWidth;
+      console.log(scalingRatio);
+      elementsList.forEach((element) => {
+        const { width, height, top, left, imageSrc, opacity, zIndex } = element;
+        setTimeout(() => {
+          this.$store.dispatch("addElement", {
+            elName: "ruyi-image",
+            defaultStyle: {
+              width: width * scalingRatio,
+              height: height * scalingRatio,
+              left: left * scalingRatio,
+              top: top * scalingRatio,
+              opacity: opacity,
+              zIndex: zIndex,
+            },
+            needProps: {
+              imageSrc,
+            },
+          });
+        }, 10);
+      });
+    },
+    showPreview() {},
   },
 };
 </script>

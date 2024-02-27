@@ -60,7 +60,7 @@
           :key="index"
           :content="item.title"
           effect="dark"
-          placement="right"
+          placement="top"
         >
           <div
             class="menu-item menu-item-on-edit-panel"
@@ -114,8 +114,7 @@ export default {
       "activeElement",
     ]),
     getMenuOptionsPositionStyle() {
-      let both =
-        (this.editorPaneWidth - this.projectData.width * this.scale) / 6;
+      let both = (this.editorPaneWidth - this.projectData.width) / 4;
       let right = both < 60 ? 16 : both;
       return {
         right: right + "px",
@@ -123,7 +122,7 @@ export default {
     },
   },
   mounted() {
-    this.editorPaneWidth = this.$refs.editorPane.offsetHeight;
+    this.editorPaneWidth = this.$refs.editorPane.offsetWidth;
   },
   methods: {
     handleElementClick(uuid) {
@@ -205,6 +204,8 @@ export default {
   width: 100%;
   overflow: auto;
   padding: 20px;
+  display: flex;
+  justify-content: center;
 
   .page-wrapper-mask {
     height: 100%;
@@ -245,7 +246,7 @@ export default {
   border-radius: 4px;
   display: none;
   transition: all 0.3s ease-in-out;
-  z-index: 1002;
+  z-index: 1000;
   opacity: 0;
   .menu-item {
     padding: 10px;
@@ -264,8 +265,8 @@ export default {
     }
   }
   &.active {
-    display: block;
-    width: 60px;
+    display: inline-block;
+    width: 58px;
     opacity: 1;
   }
 }
