@@ -40,6 +40,10 @@
       <i class="iconfont iconyulan"></i>
       <p>预览保存</p>
     </div>
+    <div class="button-item" @click="cancel">
+      <i class="iconfont icontuichu"></i>
+      <p>退出</p>
+    </div>
   </div>
 </template>
 <script>
@@ -100,6 +104,12 @@ export default {
      */
     showPreview() {
       this.$emit("showPreview");
+    },
+    /**
+     * 退出编辑
+     */
+    cancel() {
+      this.$emit("cancel");
     },
   },
 };

@@ -33,6 +33,7 @@
           :scale.sync="canvasConfig.scale"
           @import-psd-data="importPsdData"
           @showPreview="showPreview"
+          @cancel="cancel"
         ></cantrol-bar>
       </div>
       <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
@@ -123,6 +124,17 @@ export default {
       });
     },
     showPreview() {},
+    cancel() {
+      this.$confirm("是否退出当前项目?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$router.push({ name: "Home" });
+        })
+        .catch(() => {});
+    },
   },
 };
 </script>
