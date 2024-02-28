@@ -63,6 +63,7 @@ export default {
       canvasConfig: {
         scale: 1,
       },
+      showPreviewComponents: false,
     };
   },
   computed: {
@@ -123,7 +124,15 @@ export default {
         }, 10);
       });
     },
-    showPreview() {},
+    showPreview() {
+      this.$api
+        .updatedPage({ pageData: this.projectData })
+        .then(() => {
+          this.$message.success("数据更新成功");
+          this.showPreviewComponents = true;
+        })
+        .catch(() => {});
+    },
     cancel() {
       this.$confirm("是否退出当前项目?", "提示", {
         confirmButtonText: "确定",

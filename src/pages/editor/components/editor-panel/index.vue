@@ -60,7 +60,7 @@
           :key="index"
           :content="item.title"
           effect="dark"
-          placement="top"
+          placement="right"
         >
           <div
             class="menu-item menu-item-on-edit-panel"
@@ -114,7 +114,7 @@ export default {
       "activeElement",
     ]),
     getMenuOptionsPositionStyle() {
-      let both = (this.editorPaneWidth - this.projectData.width) / 4;
+      let both = (this.editorPaneWidth - this.projectData.width) / 6;
       let right = both < 60 ? 16 : both;
       return {
         right: right + "px",
