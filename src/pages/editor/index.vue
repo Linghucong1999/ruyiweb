@@ -118,7 +118,6 @@ export default {
       const elementsList = psdData.elements;
       const psdWidth = psdData.document.document.width;
       const scalingRatio = this.projectData.width / psdWidth;
-      console.log(scalingRatio);
       elementsList.forEach((element) => {
         const { width, height, top, left, imageSrc, opacity, zIndex } = element;
         setTimeout(() => {

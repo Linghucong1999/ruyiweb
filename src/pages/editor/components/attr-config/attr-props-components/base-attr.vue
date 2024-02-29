@@ -17,7 +17,7 @@
                 effect="dark"
                 placement="bottom"
               >
-                <i :class="[item.icon]" style="color: #67c23a"></i>
+                <i :class="[item.icon]"></i>
               </el-tooltip>
             </div>
           </div>
@@ -98,7 +98,18 @@
           </div>
         </div>
 
-        <div class="attr-item-edit-wrapper"></div>
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">旋转：</p>
+          <div class="col-1 attr-item-edit-input">
+            <el-slider
+              v-model="activeElement.commonStyle.rotate"
+              show-input
+              :min="-180"
+              :marks="{ 0: '', 90: '', '-90': '' }"
+              input-size="mini"
+            ></el-slider>
+          </div>
+        </div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -179,4 +190,74 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.sizeAndPosition-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.align-type-item {
+  flex: 1;
+  cursor: pointer;
+  text-align: center;
+  &.clearFlex {
+    width: 42px;
+    flex: none;
+  }
+  i {
+    line-height: 1;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 4px;
+    color: #67c23a;
+    background-color: rgba(37, 165, 137, 0.08);
+  }
+  &:hover {
+    i {
+      color: white;
+      background-color: @primary;
+    }
+  }
+}
+
+.attr-item-edit-wrapper {
+  padding-left: 18px;
+  display: flex;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+  .attr-item-title {
+    text-align: left;
+    min-width: 60px;
+    font-size: 12px;
+  }
+  .attr-item-edit-input {
+    &.col-1 {
+      width: 240px;
+    }
+    &.col-2 {
+      width: 90px;
+      margin-left: 20px;
+    }
+
+    .attr-item-edit-input-des {
+      text-align: center;
+      line-height: 1;
+      margin-top: 2px;
+      color: @gray;
+    }
+  }
+
+  ::v-deep .el-input-number.is-controls-right .el-input__inner {
+    padding-left: 2px;
+    padding-right: 20px;
+    width: 100px;
+  }
+  ::v-deep .el-input-number--mini {
+    width: 100px;
+  }
+
+  ::v-deep .el-slider__runway.show-input {
+    margin-right: 108px;
+  }
+}
 </style>
