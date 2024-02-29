@@ -111,19 +111,36 @@
           </div>
         </div>
       </el-collapse-item>
+
+      <el-collapse-item name="2" title="边框和边距：">
+        <!-- 边框 -->
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">边框：</p>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              v-model="activeElement.commonStyle.borderWidth"
+              controls-position="right"
+              :min="0"
+              size="mini"
+              @change="throttleAddHistory"
+            ></el-input-number>
+          </div>
+        </div>
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
 import { alignTypeList } from "@/utils/commanJson";
-import { subtract, ceil, divide } from "lodash";
+import { subtract, ceil, divide, throttle } from "lodash";
 
 export default {
   data() {
     return {
       activeNames: ["1"],
       alignTypeList: alignTypeList,
+      throttleAddHistory: null,
     };
   },
   computed: {
@@ -140,6 +157,9 @@ export default {
       "activePage",
       "activeElement",
     ]),
+  },
+  created() {
+    this.throttleAddHistory = throttle(this.addHistory, 3000);
   },
   methods: {
     changeAlignType(type) {
@@ -185,6 +205,10 @@ export default {
         this.activeElement.commonStyle.top = 0;
         this.activeElement.commonStyle.height = this.$config.canvasH5Height;
       }
+    },
+    addHistory() {
+      console.log("输出");
+      this.$store.dispatch("addHistoryCache");
     },
   },
 };
