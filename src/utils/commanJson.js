@@ -300,3 +300,36 @@ export const menuOptions = [
         value: 'layerBottom'
     }
 ];
+
+export const alignTypeList = [
+    {
+        title: '左对齐',
+        icon: 'iconfont iconzuoduiqi',
+        type: 'l',
+    },
+    {
+        title: '上对齐',
+        icon: 'iconfont iconshangduiqi',
+        type: 't',
+    },
+    {
+        title: '右对齐',
+        icon: 'iconfont iconyouduiqi',
+        type: 'r',
+    },
+    {
+        title: '下对齐',
+        icon: 'iconfont iconxiaduiqi',
+        type: 'b',
+    },
+    {
+        title: '垂直居中对齐',
+        icon: 'iconfont iconchuizhijuzhongduiqi',
+        type: 'tb',
+    },
+    {
+        title: '水平居中对齐',
+        icon: 'iconfont iconshuipingjuzhongduiqi',
+        type: 'lr',
+    }
+];

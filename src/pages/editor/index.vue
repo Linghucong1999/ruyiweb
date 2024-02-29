@@ -39,7 +39,17 @@
       <editor-pan :scale.sync="canvasConfig.scale"></editor-pan>
     </div>
 
-    <div class="el-attr-edit-wrapper scrollbar-wrapper">零一边框</div>
+    <div class="el-attr-edit-wrapper scrollbar-wrapper">
+      <el-tabs v-model="activeAttr" stretch>
+        <el-tab-pane label="属性" name="属性">
+          <attr-edit></attr-edit>
+        </el-tab-pane>
+        <el-tab-pane label="事件" name="事件"></el-tab-pane>
+        <el-tab-pane label="动画" name="动画"></el-tab-pane>
+        <el-tab-pane label="JavaScript" name="JavaScript"></el-tab-pane>
+        <el-tab-pane label="页面设置" name="页面设置"></el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 <script>
@@ -48,11 +58,15 @@ import { sideBarMenus } from "@/utils/commanJson";
 import ComponentLibs from "./components/component-libs/index.vue";
 import CantrolBar from "./components/control-bar.vue";
 import EditorPan from "./components/editor-panel/index.vue";
+
+// 右边页面设置属性组件
+import AttrEdit from "./components/attr-config/attr-edit.vue";
 export default {
   components: {
     ComponentLibs,
     CantrolBar,
     EditorPan,
+    AttrEdit,
   },
   data() {
     return {
@@ -64,6 +78,7 @@ export default {
         scale: 1,
       },
       showPreviewComponents: false,
+      activeAttr: "属性",
     };
   },
   computed: {
@@ -178,8 +193,9 @@ export default {
 }
 
 .el-attr-edit-wrapper {
-  width: 380px;
+  width: 390px;
   padding: 0;
+  margin: 0 10px;
 }
 
 // ::v-deep .el-tabs__item:hover {
