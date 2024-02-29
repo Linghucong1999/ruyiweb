@@ -119,7 +119,7 @@ export default {
       const psdWidth = psdData.document.document.width;
       const scalingRatio = this.projectData.width / psdWidth;
       elementsList.forEach((element) => {
-        const { width, height, top, left, imageSrc, opacity, zIndex } = element;
+        const { width, height, top, left, imageSrc, opacity,zIndex } = element;
         setTimeout(() => {
           this.$store.dispatch("addElement", {
             elName: "ruyi-image",

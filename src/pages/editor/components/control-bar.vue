@@ -40,6 +40,14 @@
       <i class="iconfont iconyulan"></i>
       <p>预览保存</p>
     </div>
+    <div
+      class="button-item"
+      :class="{ disabled: canAllDelte }"
+      @click="allDeleteElement"
+    >
+      <i class="iconfont iconiconset0335"></i>
+      <p>清空页面</p>
+    </div>
     <div class="button-item" @click="cancel">
       <i class="iconfont icontuichu"></i>
       <p>退出</p>
@@ -65,13 +73,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["canUndo", "canRedo"]),
+    ...mapGetters(["canUndo", "canRedo", "canAllDelte"]),
   },
   created() {
     this.scaleValue = this.scale;
   },
   methods: {
-    ...mapActions(["editorUndo", "editorRedo"]),
+    ...mapActions(["editorUndo", "editorRedo", "allDeleteElement"]),
     /**
      * 更新面板大小
      */

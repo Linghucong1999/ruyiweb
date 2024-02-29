@@ -147,6 +147,14 @@ const actions = {
         commit('deleteElemet', uuid);
         commit('addHistoryCache');
     },
+    /**
+     * 清空页面所有元素
+     * @param {*} param0
+     */
+    allDeleteElement({ commit }) {
+        commit('setActiveElementUUID', '');
+        commit('allDeleteElement');
+    },
     resetElementCommonStyle({ commit }, style) {
         commit('resetElementCommonStyle', style);
         commit('addHistoryCache');
@@ -310,6 +318,17 @@ const mutations = {
     },
 
     /**
+     * 清空页面所有元素
+     * @param {*} state
+     */
+    allDeleteElement(state) {
+        let activePage = getters.activePage(state);
+        let activePageElementLength = activePage.elements.length;
+        activePage.elements.splice(0, activePageElementLength);
+
+    },
+
+    /**
      * 重置元素样式
      * @param {*} state
      * @param {*} style
@@ -370,7 +389,11 @@ const getters = {
 
     canRedo(state) {
         return state.historyCache.length > state.currentHistoryIndex + 1;
-    }
+    },
+
+    canAllDelte(state) {
+        return state.activeElementUUID === '';
+    },
 
 };
 export default {
