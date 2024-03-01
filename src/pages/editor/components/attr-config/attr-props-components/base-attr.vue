@@ -124,6 +124,107 @@
               size="mini"
               @change="throttleAddHistory"
             ></el-input-number>
+            <div class="attr-item-edit-input-des">尺寸</div>
+          </div>
+
+          <div class="col-3 attr-item-edit-input">
+            <el-color-picker
+              v-model="activeElement.commonStyle.borderColor"
+              size="mini"
+              @change="throttleAddHistory"
+            ></el-color-picker>
+            <div class="attr-item-edit-input-des">颜色</div>
+          </div>
+
+          <div class="col-2 attr-item-edit-input">
+            <el-select
+              v-model="activeElement.commonStyle.borderStyle"
+              @change="throttleAddHistory"
+              size="mini"
+            >
+              <el-option
+                v-for="item in borderList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+            <div class="attr-item-edit-input-des">样式</div>
+          </div>
+        </div>
+
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">边框圆弧：</p>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              v-model="activeElement.commonStyle.borderRadius"
+              controls-position="right"
+              :min="0"
+              @change="throttleAddHistory"
+            ></el-input-number>
+          </div>
+        </div>
+
+        <!-- 边距 -->
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">上下边距</p>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              @change="throttleAddHistory"
+              v-model="activeElement.commonStyle.paddingTop"
+              controls-position="right"
+              :min="0"
+            ></el-input-number>
+          </div>
+
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              @change="throttleAddHistory"
+              v-model="activeElement.commonStyle.paddingBottom"
+              controls-position="right"
+              :min="0"
+            ></el-input-number>
+          </div>
+        </div>
+
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">左右边距：</p>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              @change="throttleAddHistory"
+              v-model="activeElement.commonStyle.paddingLeft"
+              controls-position="right"
+              :min="0"
+            ></el-input-number>
+          </div>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              @change="throttleAddHistory"
+              v-model="activeElement.commonStyle.paddingRight"
+              controls-position="right"
+              :min="0"
+            ></el-input-number>
+          </div>
+        </div>
+      </el-collapse-item>
+
+      <!-- 元素阴影 -->
+      <el-collapse-item title="阴影位置" name="3">
+        <div class="attr-item-edit-wrapper">
+          <p class="attr-item-title">阴影位置</p>
+          <div class="col-2 attr-item-edit-input">
+            <el-input-number
+              size="mini"
+              @change="boxShadowChange"
+              v-model="boxShadow.h"
+              controls-position="right"
+              :min="0"
+            ></el-input-number>
           </div>
         </div>
       </el-collapse-item>
@@ -132,7 +233,7 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
-import { alignTypeList } from "@/utils/commanJson";
+import { alignTypeList, borderStyleList } from "@/utils/commanJson";
 import { subtract, ceil, divide, throttle } from "lodash";
 
 export default {
@@ -141,6 +242,14 @@ export default {
       activeNames: ["1"],
       alignTypeList: alignTypeList,
       throttleAddHistory: null,
+      borderList: borderStyleList,
+      boxShadow: {
+        h: 0,
+        v: 0,
+        blur: 0,
+        spread: 0,
+        color: "#000000",
+      },
     };
   },
   computed: {
@@ -207,8 +316,11 @@ export default {
       }
     },
     addHistory() {
-      console.log("输出");
       this.$store.dispatch("addHistoryCache");
+    },
+    boxShadowChange() {
+      const str = `${this.boxShadow.h}px ${this.boxShadow.v}px ${this.boxShadow.blur}px ${this.boxShadow.spread}px ${this.boxShadow.color}`;
+      this.activeElement.commonStyle.boxShadow = str;
     },
   },
 };
@@ -261,6 +373,11 @@ export default {
     &.col-2 {
       width: 90px;
       margin-left: 20px;
+    }
+
+    &.col-3 {
+      width: 60px;
+      margin-left: 10px;
     }
 
     .attr-item-edit-input-des {

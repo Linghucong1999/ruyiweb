@@ -333,3 +333,22 @@ export const alignTypeList = [
         type: 'lr',
     }
 ];
+
+export const borderStyleList = [
+    {
+        label: '实线',
+        value: 'solid'
+    },
+    {
+        label: '虚线',
+        value: 'dashed',
+    },
+    {
+        label: '点状',
+        value: 'dotted',
+    },
+    {
+        label: '双实线',
+        value: 'double',
+    },
+];

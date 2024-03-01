@@ -114,7 +114,7 @@ let getElementConfig = (element, extendStyle = {}) => {
  * 获取元素样式
  */
 let getCommonStyle = (styleObj, scalingRatio = 1) => {
-    let needUnitStr = ['width', 'height', 'top', 'left', 'borderWidth', 'borderRadius', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomWidth', 'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'margin', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom', 'fontSize', 'letterSpacing', 'lineHeight', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'borderBottomColor', 'backgroundColor', 'borderColor', 'color', 'backgroundRepeat', 'backgroundPositionX', 'backgroundPositionY', 'backgroundSize'];
+    let needUnitStr = ['width', 'height', 'top', 'left', 'borderWidth', 'borderRadius', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomWidth', 'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'margin', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom', 'fontSize', 'letterSpacing', 'lineHeight'];
     let style = {};
 
     for (let key in styleObj) {
@@ -127,6 +127,7 @@ let getCommonStyle = (styleObj, scalingRatio = 1) => {
 
     style.transform = `rotate(${style.rotate}deg)`;
     style.backgroundImage = style.backgroundImage ? `url(${style.backgroundImage})` : '';
+    console.log(style);
     return style;
 };
 

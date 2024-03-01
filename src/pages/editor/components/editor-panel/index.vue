@@ -97,9 +97,12 @@ export default {
   data() {
     return {
       editorPaneWidth: 0,
-      getCommonStyle: editorProjectConfig.getCommonStyle,
+      getCommonStyle: null,
       menuOptions: menuOptions,
     };
+  },
+  created(){
+    this.getCommonStyle=editorProjectConfig.getCommonStyle;
   },
   computed: {
     ...mapState({
