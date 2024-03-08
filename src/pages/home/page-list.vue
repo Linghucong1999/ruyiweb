@@ -91,6 +91,8 @@ export default {
         this.pageList = res.body.pages || [];
         this.myCount = res.body.myPageCount;
         this.shareCount = res.body.myCooperationPageCount;
+      }).catch(err=>{
+        console.log(err);
       });
     },
     //预览
