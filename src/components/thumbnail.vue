@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="page-item-title">
+      <div class="page-item-title border-T ellipsis">
         <el-tag
           :type="
             !pageData.isPublish && showPublishState ? 'warning' : 'success'
