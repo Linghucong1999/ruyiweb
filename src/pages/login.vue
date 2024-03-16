@@ -13,21 +13,41 @@
         <div class="login-password" v-if="ifEmail === false">
           <el-form :model="formData" :rules="formRules" ref="loginForm">
             <el-form-item prop="username">
-              <el-input v-model="formData.username" placeholder="用户名" prefix-icon="el-icon-user"></el-input>
+              <el-input
+                v-model="formData.username"
+                placeholder="用户名"
+                prefix-icon="el-icon-user"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="email" v-if="type === 'register'">
-              <el-input v-model="formData.email" placeholder="邮箱" auto-complete="off"
-                prefix-icon="el-icon-message"></el-input>
+              <el-input
+                v-model="formData.email"
+                placeholder="邮箱"
+                auto-complete="off"
+                prefix-icon="el-icon-message"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="formData.password" name="password" placeholder="密码" type="password" show-password
-                prefix-icon="el-icon-lock" clearable></el-input>
+              <el-input
+                v-model="formData.password"
+                name="password"
+                placeholder="密码"
+                type="password"
+                show-password
+                prefix-icon="el-icon-lock"
+                clearable
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <div class="rest-password">
                 <el-tooltip content="重置密码" placement="top-start">
-                  <el-button type="text" @click="goPassword" icon="el-icon-question"
-                    v-if="type === 'login'">重置密码</el-button>
+                  <el-button
+                    type="text"
+                    @click="goPassword"
+                    icon="el-icon-question"
+                    v-if="type === 'login'"
+                    >重置密码</el-button
+                  >
                 </el-tooltip>
                 <div class="switch-do- type">
                   <el-button type="text" @click="switchType">{{
@@ -53,13 +73,28 @@
         <div class="login-password" v-else>
           <el-form :model="formData" :rules="formRules" ref="emailForm">
             <el-form-item prop="email">
-              <el-input v-model="formData.email" placeholder="邮箱登录" prefix-icon="el-icon-mobile-phone"></el-input>
+              <el-input
+                v-model="formData.email"
+                placeholder="邮箱登录"
+                prefix-icon="el-icon-mobile-phone"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="code">
               <div class="send-code">
-                <el-input v-model="formData.code" placeholder="请输入验证码" prefix-icon="el-icon-message"></el-input>
-                <el-button type="primary" size="small" @click="sendEmailCode" :disabled="disableEamilButton">
-                  <template v-if="disableEamilButton">{{ countDown }}s后可重新发送</template>
+                <el-input
+                  v-model="formData.code"
+                  placeholder="请输入验证码"
+                  prefix-icon="el-icon-message"
+                ></el-input>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="sendEmailCode"
+                  :disabled="disableEamilButton"
+                >
+                  <template v-if="disableEamilButton"
+                    >{{ countDown }}s后可重新发送</template
+                  >
                   <template v-else>发送验证码</template>
                 </el-button>
               </div>
@@ -223,13 +258,13 @@ export default {
         if (vaild) {
           let formData = { ...this.formData };
           let res = await userModel.doLoginByEmail(formData);
-          if (Object.keys(res).length !== 0) {
+          if (Object.keys(res.body).length !== 0) {
             this.$message.success("登录成功");
             this.formUrl
               ? this.$router.push(this.formUrl)
               : userModel.goBeforeLoginUrl();
           } else {
-            this.$message.error("该用户未注册");
+            this.$message.error(res.message);
           }
         } else {
           this.$message.error("请输入正确的邮箱和验证码");
@@ -257,7 +292,8 @@ export default {
   justify-content: center;
   height: 100vh;
   flex-direction: row;
-  background: url("../common/images/sign_bg.47eec442.png") no-repeat center center / cover;
+  background: url("../common/images/sign_bg.47eec442.png") no-repeat center
+    center / cover;
   background-size: 100% 100%;
 }
 

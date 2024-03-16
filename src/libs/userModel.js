@@ -73,7 +73,7 @@ let userModel = {
             let res = await loginByEmail(data);
             store.commit('updateAccessToken', res.body.access_token);
             store.commit('updateUserInfo', res.body.userInfo);
-            return res.body;
+            return res;
         } catch (err) {
             return err;
         }
@@ -131,7 +131,8 @@ let userModel = {
 
     async goBeforeLoginUrl() {
         // 获取sessionStorage中的beforeLoginUrl
-        let url = window.sessionStorage.getItem('beforeLoginUrl');
+        const url = window.sessionStorage.getItem('beforeLoginUrl');
+        console.log(url);
         // 判断beforeLoginUrl是否存在，或者是否包含/login
         if (!url || ['/login'].includes(url)) {
             // 如果不存在或者包含/login，则跳转到根路由
