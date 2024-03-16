@@ -207,10 +207,12 @@ export default {
       let formData = { ...this.formData };
       formData.password = encryption(this.formData.password, this.publickey);
       const res = await userModel.doRegister(formData);
-      if (Object.keys(res).length !== 0) {
+      if (Object.keys(res.body).length !== 0) {
         this.formUrl
           ? this.$router.push(this.formUrl)
           : userModel.goBeforeLoginUrl();
+      } else {
+        this.$message.error(res.message);
       }
     },
     goPassword() {

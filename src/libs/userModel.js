@@ -87,7 +87,7 @@ let userModel = {
             let res = await register(data);
             store.commit('updateAccessToken', res.body.access_token);
             store.commit('updateUserInfo', res.body.userInfo);
-            return res.body;
+            return res;
         } catch (err) {
             return err.data;
         }
